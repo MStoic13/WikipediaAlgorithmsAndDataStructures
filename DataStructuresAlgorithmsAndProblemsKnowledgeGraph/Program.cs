@@ -10,11 +10,10 @@ namespace DataStructuresAlgorithmsAndProblemsKnowledgeGraph
         static void Main(string[] args)
         {
             List<HtmlNode> relevantNodes = ExtractRelevantNodes("https://en.wikipedia.org/wiki/List_of_algorithms");
-            // PrintNodes(relevantNodes);
 
-            List<Tuple<HtmlNode, List<HtmlNode>>> graph = ParseNodesListIntoGraph(relevantNodes);
-
-            // todo: parse this list into a graph
+            // the graph uses the nodes list's index as its ints
+            List<List<int>> graph = ParseNodesListIntoGraph(relevantNodes);
+            PrintGraph(graph);
 
             Console.ReadKey();
         }
@@ -33,13 +32,50 @@ namespace DataStructuresAlgorithmsAndProblemsKnowledgeGraph
             return results;
         }
 
-        static List<Tuple<HtmlNode, List<HtmlNode>>> ParseNodesListIntoGraph(List<HtmlNode> nodesList)
+        static List<List<int>> ParseNodesListIntoGraph(List<HtmlNode> nodesList)
         {
-            List<Tuple<HtmlNode, List<HtmlNode>>> result = new List<Tuple<HtmlNode, List<HtmlNode>>>();
+            List<List<int>> result = new List<List<int>>();
 
+            // you can rely that the nodes are in order h2 > h3 > h4 however ul can come at any point
+            // and there are no duplicates
+            int mostRecentHIndex = 0;
+            for (int index = 0; index < nodesList.Count; index++)
+            {
+                // each node in the list needs to be in the graph, their index matching in both the list and the graph
+                result.Add(new List<int>());
 
+                if (nodesList[index].Name == "h2")
+                {
+                    mostRecentHIndex = index;
+                }
+                else if (nodesList[index].Name.StartsWith("h"))
+                {
+                    result[mostRecentHIndex].Add(index);
+                    mostRecentHIndex = index;
+                }
+                else if (nodesList[index].Name == "ul")
+                {
+                    result[mostRecentHIndex].Add(index);
+                }
+            }
 
             return result;
+        }
+
+        static void PrintGraph(List<List<int>> graph)
+        {
+            int index = 0;
+            foreach (List<int> list in graph)
+            {
+                Console.Write(index + ": ");
+                foreach (int x in list)
+                {
+                    Console.Write(x + ", ");
+                }
+
+                Console.WriteLine();
+                index++;
+            }
         }
 
         static void PrintNodes(List<HtmlNode> relevantNodes)
