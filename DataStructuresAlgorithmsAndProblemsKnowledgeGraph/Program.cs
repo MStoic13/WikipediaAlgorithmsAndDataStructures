@@ -1,6 +1,7 @@
 ﻿using System;
 using HtmlAgilityPack;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace DataStructuresAlgorithmsAndProblemsKnowledgeGraph
 {
@@ -8,30 +9,42 @@ namespace DataStructuresAlgorithmsAndProblemsKnowledgeGraph
     {
         static void Main(string[] args)
         {
-            ExtractH2H3H4UlNodes("https://en.wikipedia.org/wiki/List_of_algorithms");
+            List<HtmlNode> relevantNodes = ExtractRelevantNodes("https://en.wikipedia.org/wiki/List_of_algorithms");
+            // PrintNodes(relevantNodes);
+
+            List<Tuple<HtmlNode, List<HtmlNode>>> graph = ParseNodesListIntoGraph(relevantNodes);
+
+            // todo: parse this list into a graph
+
             Console.ReadKey();
         }
 
-        static void PrintNodes(HtmlNode contentRoot)
-        {
-            foreach (HtmlNode node in contentRoot.ChildNodes.Where(x => x.Name == "h2" || x.Name == "h3" || x.Name == "h4" || x.Name == "ul"))
-            {
-                Console.Write(node.Name + " --- ");
-                Console.WriteLine(node.InnerText);
-            }
-        }
-
-        static void ExtractH2H3H4UlNodes(string URL)
+        static List<HtmlNode> ExtractRelevantNodes(string wikipediaPageUrl)
         {
             // declaring & loading dom
             HtmlWeb web = new HtmlWeb();
             HtmlDocument doc = new HtmlDocument();
-            doc = web.Load(URL);
+            doc = web.Load(wikipediaPageUrl);
 
             // get the div in which the page content is
             HtmlNode contentRoot = doc.DocumentNode.SelectNodes("//div").Where(x => x.HasClass("mw-parser-output")).FirstOrDefault();
 
-            foreach (HtmlNode node in contentRoot.ChildNodes.Where(x => x.Name == "h2" || x.Name == "h3" || x.Name == "h4" || x.Name == "ul"))
+            List<HtmlNode> results = contentRoot.ChildNodes.Where(x => x.Name == "h2" || x.Name == "h3" || x.Name == "h4" || x.Name == "ul").ToList();
+            return results;
+        }
+
+        static List<Tuple<HtmlNode, List<HtmlNode>>> ParseNodesListIntoGraph(List<HtmlNode> nodesList)
+        {
+            List<Tuple<HtmlNode, List<HtmlNode>>> result = new List<Tuple<HtmlNode, List<HtmlNode>>>();
+
+
+
+            return result;
+        }
+
+        static void PrintNodes(List<HtmlNode> relevantNodes)
+        {
+            foreach (HtmlNode node in relevantNodes)
             {
                 Console.Write(node.Name + " --- ");
 
