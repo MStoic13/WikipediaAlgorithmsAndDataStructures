@@ -1,0 +1,2 @@
+- move knowledge graph extraction from wikipedia into a net framework dll which all other projects can use. change the tests projects too to net framework and test your library. have a console app for debugging the dll and the form is for visualizaiton.
+- 

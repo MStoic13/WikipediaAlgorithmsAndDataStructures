@@ -7,21 +7,31 @@ namespace DataStructuresAlgorithmsAndProblemsKnowledgeGraph
 {
     public class Program
     {
+        public static List<string> WikipediaPagesToParse = new List<string>()
+        {
+            "https://en.wikipedia.org/wiki/List_of_algorithms",
+            "https://en.wikipedia.org/wiki/List_of_data_structures"
+        };
+
         public static void Main(string[] args)
         {
-            List<string> wikipediaPagesToParse = new List<string>()
-            {
-                "https://en.wikipedia.org/wiki/List_of_algorithms",
-                "https://en.wikipedia.org/wiki/List_of_data_structures"
-            };
-            List<HtmlNode> relevantNodes = ExtractRelevantNodes(wikipediaPagesToParse[0]);
+            Tuple<List<List<int>>, List<string>> knowledgeGraph = GetWikipediaPageKnowledgeGraph(WikipediaPagesToParse[0]);
 
-            // the graph uses the nodes list's index as its ints
-            List<List<int>> graph = ParseNodesListIntoGraph(relevantNodes);
-
-            PrintGraphWithNames(graph, relevantNodes);
+            PrintGraphWithNames(knowledgeGraph.Item1, knowledgeGraph.Item2);
 
             Console.ReadKey();
+        }
+
+        public static Tuple<List<List<int>>, List<string>> GetWikipediaPageKnowledgeGraph(string wikipediaPageUrl)
+        {
+            List<string> nodeNames = new List<string>();
+
+            List<HtmlNode> relevantNodes = ExtractRelevantNodes(wikipediaPageUrl);
+            relevantNodes.ForEach(node => nodeNames.Add(GetNodeHeadlineText(node)));
+            List<List<int>> graph = ParseNodesListIntoGraph(relevantNodes);
+
+            Tuple<List<List<int>>, List<string>> result = new Tuple<List<List<int>>, List<string>>(graph, nodeNames);
+            return result;
         }
 
         public static List<HtmlNode> ExtractRelevantNodes(string wikipediaPageUrl)
@@ -94,7 +104,7 @@ namespace DataStructuresAlgorithmsAndProblemsKnowledgeGraph
             }
         }
 
-        public static void PrintGraphWithNames(List<List<int>> graph, List<HtmlNode> nodes)
+        public static void PrintGraphWithNames(List<List<int>> graph, List<string> nodeNames)
         {
             // we'll use DFS to print the names according to the graph and with indentation
             List<bool> visited = new List<bool>();
@@ -104,15 +114,15 @@ namespace DataStructuresAlgorithmsAndProblemsKnowledgeGraph
             {
                 if (!visited[i])
                 {
-                    DFSRecursive(graph, visited, i, nodes, 0);
+                    DFSRecursive(graph, visited, i, nodeNames, 0);
                 }
             }
         }
 
-        public static void DFSRecursive(List<List<int>> graph, List<bool> visited, int currentNode, List<HtmlNode> nodes, int level)
+        public static void DFSRecursive(List<List<int>> graph, List<bool> visited, int currentNode, List<string> nodeNames, int level)
         {
             //Console.Write(currentNode + " - " + nodes[currentNode].Name);
-            Console.Write(GetNodeHeadlineText(nodes[currentNode]));
+            Console.Write(nodeNames[currentNode]);
             Console.WriteLine();
             visited[currentNode] = true;
             level++;
@@ -120,7 +130,7 @@ namespace DataStructuresAlgorithmsAndProblemsKnowledgeGraph
                 if (!visited[x])
                 {
                     PrintLevelSpaces(level);
-                    DFSRecursive(graph, visited, x, nodes, level);
+                    DFSRecursive(graph, visited, x, nodeNames, level);
                 }
             });
             level--;
