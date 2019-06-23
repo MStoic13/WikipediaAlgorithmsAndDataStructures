@@ -1,2 +1,8 @@
-- move knowledge graph extraction from wikipedia into a net framework dll which all other projects can use. change the tests projects too to net framework and test your library. have a console app for debugging the dll and the form is for visualizaiton.
-- 
+DONE - find knowledge of algorithms, problme types and data structures and how they are all used - the info for the knowledge graph - https://en.wikipedia.org/wiki/List_of_algorithms, https://en.wikipedia.org/wiki/List_of_data_structures
+DONE - figure out how to extract knowledge - wikipedia api? wikitext? html? other? - html
+DONE - parse html from wikipedia page - https://html-agility-pack.net/
+DONE - turn the content of the page html into a graph DS - h2, h3, h4, ul
+DONE - find graph plot library - https://github.com/microsoft/automatic-graph-layout
+- refator: move knowledge graph extraction from wikipedia into a net framework dll which all other projects can use. change the tests projects too to net framework and test your library. have a console app for debugging the dll and the form is for visualizaiton. and delete the net core projcet and the net core tests project since we will be switching to net framework otherwise the msagl libs don't work.
+- knowledge graph functionality - expand the uls to extract their info and put it in the graph
+- try displaying the whole thing with the uls expanded see what it looks like
