@@ -3,60 +3,54 @@ using System.Text;
 
 namespace KnowledgeExtractor
 {
-    public class KnowledgeGraph
+    public static class Utilities
     {
-        public List<List<int>> GraphSkeleton { get; set; }
-
-        public List<string> NodeNames { get; set; }
-
-        public string FormatGraphIntsForPrinting()
+        public static string FormatKnGraphIndexesForPrinting(KnowledgeGraph graph)
         {
             StringBuilder sb = new StringBuilder();
-            int index = 0;
-            foreach (List<int> list in this.GraphSkeleton)
+            foreach (KnGNode node in graph.KnGraph)
             {
-                sb.Append(index + ": ");
-                foreach (int x in list)
+                sb.Append(node.Index + ": ");
+                foreach (KnGNode neighbor in node.Neighbors)
                 {
-                    sb.Append(x + ", ");
+                    sb.Append(neighbor.Index + ", ");
                 }
 
                 sb.AppendLine();
-                index++;
             }
 
             return sb.ToString();
         }
 
-        public string FormatGraphWithNamesForPrinting()
+        public static string FormatKnGraphLabelsForPrinting(KnowledgeGraph graph)
         {
             // we'll use DFS to print the names according to the graph and with indentation
             List<bool> visited = new List<bool>();
-            this.GraphSkeleton.ForEach(x => visited.Add(false));
+            graph.KnGraph.ForEach(x => visited.Add(false));
             StringBuilder sb = new StringBuilder();
 
-            for (int i = 0; i < this.GraphSkeleton.Count; i++)
+            foreach (KnGNode node in graph.KnGraph)
             {
-                if (!visited[i])
+                if (!visited[node.Index])
                 {
-                    DFSRecursive(visited, i, 0, ref sb);
+                    DFSRecursive(visited, node, 0, ref sb);
                 }
             }
 
             return sb.ToString();
         }
 
-        private void DFSRecursive(List<bool> visited, int currentNode, int level, ref StringBuilder sb)
+        private static void DFSRecursive(List<bool> visited, KnGNode currentNode, int level, ref StringBuilder sb)
         {
-            sb.Append(this.NodeNames[currentNode]);
+            sb.Append(currentNode.Label);
             sb.AppendLine();
-            visited[currentNode] = true;
+            visited[currentNode.Index] = true;
 
             level++;
 
-            foreach (int neighbor in this.GraphSkeleton[currentNode])
+            foreach (KnGNode neighbor in currentNode.Neighbors)
             {
-                if (!visited[neighbor])
+                if (!visited[neighbor.Index])
                 {
                     PrintLevelSpaces(level, ref sb);
                     DFSRecursive(visited, neighbor, level, ref sb);

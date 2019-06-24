@@ -44,7 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="KnowledgeGraph.cs" />
+    <Compile Include="KnowledgeGraph\KnGNode.cs" />
+    <Compile Include="KnowledgeGraph\KnowledgeGraph.cs" />
+    <Compile Include="Utilities.cs" />
     <Compile Include="WikipediaKnowledgeGraphExtractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

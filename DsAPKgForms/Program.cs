@@ -23,10 +23,10 @@ namespace DsAPKgForms
             //create a graph object 
             Microsoft.Msagl.Drawing.Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
             //create the graph content 
-            for (int index = 0; index < knowledgeGraph.GraphSkeleton.Count; index ++)
+            for (int index = 0; index < knowledgeGraph.KnGraph.Count; index ++)
             {
-                graph.AddNode(knowledgeGraph.NodeNames[index]);
-                knowledgeGraph.GraphSkeleton[index].ForEach(neighbor => graph.AddEdge(knowledgeGraph.NodeNames[index], knowledgeGraph.NodeNames[neighbor]));
+                graph.AddNode(knowledgeGraph.KnGraph[index].Label);
+                knowledgeGraph.KnGraph[index].Neighbors.ForEach(neighbor => graph.AddEdge(knowledgeGraph.KnGraph[index].Label, knowledgeGraph.KnGraph[neighbor.Index].Label));
             }
             
             //bind the graph to the viewer 
