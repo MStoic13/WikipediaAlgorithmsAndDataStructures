@@ -11,7 +11,7 @@ namespace ConsoleAppSandbox
             KnowledgeGraph knowledgeGraph = WKGE.GetWikipediaPageKnowledgeGraph(WKGE.GetWikipediaListOfAlgorithmsPageUrl());
 
             Console.WriteLine(Utilities.FormatKnGraphLabelsForPrinting(knowledgeGraph));
-            Console.WriteLine(Utilities.FormatKnGraphIndexesForPrinting(knowledgeGraph));
+            //Console.WriteLine(Utilities.FormatKnGraphIndexesForPrinting(knowledgeGraph));
 
             Console.ReadKey();
         }

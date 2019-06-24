@@ -81,22 +81,20 @@ namespace KnowledgeExtractor
 
             foreach(var node in htmlNodes)
             {
-                // each node in the list needs to be in the graph, their index matching in both the list and the graph
-                // result.Add(new List<int>());
-                result.KnGraph.Add(new KnGNode(index, GetNodeHeadlineText(node), node.Name));
-
                 if (node.Name == "ul")
                 {
                     // ul has more nodes in it which need to be indexed and the subtree added here
                     // the ul itself is not a node but a list of nodes, ul is just a placeholder
+                    
+                    // result.KnGraph[mostRecentHIndex].Neighbors.Add(new KnGNode(index, GetNodeHeadlineText(node), node.Name));
 
-                    //result[mostRecentHIndex].Add(index);
-                    result.KnGraph[mostRecentHIndex].Neighbors.Add(new KnGNode(index, GetNodeHeadlineText(node), node.Name));
-
-                    //ExtractAndAddUlSubgraphRecursive(graph:result, parentIndex:mostRecentHIndex, nodeToParse: node, nodeToParseIndex:ref index);
+                    ExtractAndAddUlSubgraphRecursive(graph: result, parentIndex: mostRecentHIndex, nodeToParse: node, nodeToParseIndex: ref index);
                 }
                 else if (node.Name.StartsWith("h"))
                 {
+                    // only add h's and li's to the graph, not ul's
+                    result.KnGraph.Add(new KnGNode(index, GetNodeHeadlineText(node), node.Name));
+
                     mostRecentHIndex = index;
 
                     // turn the h number into int and -2 to get the index for mostRecentHIndexes
@@ -106,12 +104,11 @@ namespace KnowledgeExtractor
                     // if it's h3 then add it to the most recent h2 and if it's h4 add it to the most recent h3 and so on if hN add it to h(N-1)
                     if (hIndex > 0)
                     {
-                        //result[mostRecentHIndexes[hIndex - 1]].Add(index);
                         result.KnGraph[mostRecentHIndexes[hIndex - 1]].Neighbors.Add(new KnGNode(index, GetNodeHeadlineText(node), node.Name));
                     }
-                }
 
-                index++;
+                    index++;
+                }
             }
 
             return result;
@@ -127,32 +124,49 @@ namespace KnowledgeExtractor
             return ParseHtmlNodesIntoKnGraph(ExtractRelevantHtmlNodesFromHtmlString(htmlInput));
         }
 
-        //public static void ExtractAndAddUlSubgraphRecursive(List<List<KnGNode>> graph, int parentIndex, HtmlNode nodeToParse, ref int nodeToParseIndex)
-        //{
-        //    foreach (var child in nodeToParse.ChildNodes)
-        //    {
-        //        if(child.Name == "li")
-        //        {
-        //            // 1 li can only have 1 ul in it
-        //            HtmlNode ulNode = child.ChildNodes.Where(node => node.Name == "ul").FirstOrDefault();
+        public static void ExtractAndAddUlSubgraphRecursive(KnowledgeGraph graph, int parentIndex, HtmlNode nodeToParse, ref int nodeToParseIndex)
+        {
+            foreach (var child in nodeToParse.ChildNodes.Where(n => n.Name == "li"))
+            {
+                // and add it as a parent, too
+                graph.KnGraph.Add(new KnGNode(index: nodeToParseIndex, label: GetLiNodeLabel(child), htmlName: "li"));
 
-        //            // if the li has an ul in it, go into recursive
-        //            if (ulNode != null)
-        //            {
-        //                // add the li node to the graph because it will be the parent of its ul's items and increase the index counter
-        //                graph[parentIndex].Add(new KnGNode(index: nodeToParseIndex, label: child.ChildNodes.First().InnerText, htmlName: "li"));
-        //                int newParentIndex = nodeToParseIndex;
-        //                nodeToParseIndex++;
-        //                ExtractAndAddUlSubgraphRecursive(graph:graph, parentIndex: newParentIndex, nodeToParse:ulNode, nodeToParseIndex: ref nodeToParseIndex);
-        //            }
-        //            else
-        //            {
-        //                graph[parentIndex].Add(new KnGNode(index: nodeToParseIndex, label: child.InnerText, htmlName: "li"));
-        //                nodeToParseIndex++;
-        //            }
-        //        }
-        //    }
-        //}
+                // 1 li can only have 1 ul in it
+                HtmlNode ulNode = child.ChildNodes.Where(node => node.Name == "ul").FirstOrDefault();
+
+                // if the li has an ul in it, go into recursive
+                if (ulNode != null)
+                {
+                    // add the li node to the graph because it will be the parent of its ul's items and increase the index counter
+                    graph.KnGraph[parentIndex].Neighbors.Add(new KnGNode(index: nodeToParseIndex, label: GetLiNodeLabel(child), htmlName: "li"));
+
+                    int newParentNodeIndex = nodeToParseIndex;
+                    nodeToParseIndex++;
+                    ExtractAndAddUlSubgraphRecursive(
+                        graph: graph, 
+                        parentIndex: newParentNodeIndex, 
+                        nodeToParse: ulNode, 
+                        nodeToParseIndex: ref nodeToParseIndex);
+                }
+                else
+                {
+                    graph.KnGraph[parentIndex].Neighbors.Add(new KnGNode(index: nodeToParseIndex, label: GetLiNodeLabel(child), htmlName: "li"));
+                    nodeToParseIndex++;
+                }
+            }
+        }
+
+        private static string GetLiNodeLabel(HtmlNode node)
+        {
+            return "li";
+
+            if(node.ChildNodes.Count == 1)
+            {
+                return node.InnerText;
+            }
+
+            return node.ChildNodes[1].InnerText;
+        }
 
         private static string GetNodeHeadlineText(HtmlNode node)
         {
