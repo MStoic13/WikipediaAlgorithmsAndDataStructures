@@ -1,6 +1,5 @@
 ﻿using KnowledgeExtractor;
 using System;
-
 using WKGE = KnowledgeExtractor.WikipediaKnowledgeGraphExtractor;
 
 namespace ConsoleAppSandbox

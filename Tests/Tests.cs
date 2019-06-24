@@ -13,48 +13,56 @@ namespace Tests
         [TestMethod]
         public void ParseNodesListIntoGraphTest()
         {
-            List<HtmlNode> nodes = new List<HtmlNode>();
-            nodes.Add(CreateNodeWithName("h2"));
-            nodes.Add(CreateNodeWithName("h2"));
-            nodes.Add(CreateNodeWithName("h3"));
-            nodes.Add(CreateNodeWithName("ul"));
-            nodes.Add(CreateNodeWithName("h4"));
-            nodes.Add(CreateNodeWithName("ul"));
-            nodes.Add(CreateNodeWithName("h3"));
-            nodes.Add(CreateNodeWithName("ul"));
-            nodes.Add(CreateNodeWithName("h2"));
-            nodes.Add(CreateNodeWithName("ul"));
+            string htmlInput = @"
+            <div class=""mw-parser-output"">
+                <h2></h2>
+                <h2></h2>
+                <h3></h3>
+                <ul></ul>
+                <h4></h4>
+                <ul></ul>
+                <h3></h3>
+                <ul></ul>
+                <h2></h2>
+                <ul></ul>
+            </div>";
 
-            List<List<int>> expectedGraph = new List<List<int>>()
-            {
-                new List<int>(),
-                new List<int>() { 2, 6 },
-                new List<int>() { 3, 4 },
-                new List<int>(),
-                new List<int>() { 5 },
-                new List<int>(),
-                new List<int>() { 7 },
-                new List<int>(),
-                new List<int>() { 9 },
-                new List<int>()
-            };
-
-            List<List<int>> graph = WikipediaKnowledgeGraphExtractor.ParseHtmlNodesIntoKnGraph(nodes);
+            KnowledgeGraph expectedKnGraph = new KnowledgeGraph();
+            expectedKnGraph.KnGraph.Add(new KnGNode(0, "h2-1", "h2"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(1, "h2-2", "h2"));
+            expectedKnGraph.KnGraph[1].Neighbors.Add(new KnGNode(2, "h3-1", "h3"));
+            expectedKnGraph.KnGraph[1].Neighbors.Add(new KnGNode(6, "h3-2", "h3"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(2, "h3-1", "h3"));
+            expectedKnGraph.KnGraph[2].Neighbors.Add(new KnGNode(3, "ul-1", "ul"));
+            expectedKnGraph.KnGraph[2].Neighbors.Add(new KnGNode(4, "h4-1", "h4"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(3, "ul-1", "ul"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(4, "h4-1", "h4"));
+            expectedKnGraph.KnGraph[4].Neighbors.Add(new KnGNode(5, "ul-2", "ul"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(5, "ul-2", "ul"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(6, "h3-3", "h4"));
+            expectedKnGraph.KnGraph[6].Neighbors.Add(new KnGNode(7, "ul-3", "ul"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(7, "ul-3", "ul"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(8, "h2-3", "h2"));
+            expectedKnGraph.KnGraph[8].Neighbors.Add(new KnGNode(9, "ul-4", "ul"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(9, "ul-4", "ul"));
+            
+            List<HtmlNode> nodes = WKGE.ExtractRelevantHtmlNodesFromHtmlString(htmlInput);
+            KnowledgeGraph actualKnGraph = WKGE.ParseHtmlNodesIntoKnGraph(nodes);
 
             // assert.equal in .net core is smart enough to just compare expectedGraph and graph
             // collectionAssert are equivalent is not smart enough to do this in VS test tools
             // so I have to write it myself
 
-            Assert.AreEqual(expectedGraph.Count, graph.Count);
-            for(int index = 0; index < expectedGraph.Count; index++)
+            Assert.AreEqual(expectedKnGraph.KnGraph.Count, actualKnGraph.KnGraph.Count);
+            for (int index = 0; index < expectedKnGraph.KnGraph.Count; index++)
             {
-                Assert.AreEqual(expectedGraph[index].Count, graph[index].Count);
+                Assert.AreEqual(expectedKnGraph.KnGraph[index].Neighbors.Count, actualKnGraph.KnGraph[index].Neighbors.Count);
 
-                if(expectedGraph[index].Count > 0)
+                if (expectedKnGraph.KnGraph[index].Neighbors.Count > 0)
                 {
-                    for(int index2 = 0; index2 < expectedGraph[index].Count; index2++)
+                    for (int index2 = 0; index2 < expectedKnGraph.KnGraph[index].Neighbors.Count; index2++)
                     {
-                        Assert.AreEqual(expectedGraph[index][index2], graph[index][index2]);
+                        Assert.AreEqual(expectedKnGraph.KnGraph[index].Neighbors[index2].Index, actualKnGraph.KnGraph[index].Neighbors[index2].Index);
                     }
                 }
             }
