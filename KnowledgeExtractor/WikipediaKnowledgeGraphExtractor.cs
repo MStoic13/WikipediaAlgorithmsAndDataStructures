@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -58,28 +59,34 @@ namespace KnowledgeExtractor
             List<List<int>> result = new List<List<int>>();
 
             // you can rely that the nodes are in order h2 > h3 > h4 however ul can come at any point
-            // and there are no duplicates
+            // and there are no duplicate pieces of knowledge (I mean you'll see more h2, h3, h4 and ul but they each correspond to a different piece of knowledge)
 
             // list with the last index of h2, h3, and h4 - compute index of this list by taking the h's number - 2
             List<int> mostRecentHIndexes = new List<int>() { 0, 0, 0 };
             // I need this variable to store the last known h for the ul elements since I can't know which h was laste just with the list
             int mostRecentHIndex = 0;
+            int index = 0;
 
-            for (int index = 0; index < nodesList.Count; index++)
+            foreach(var node in nodesList)
             {
                 // each node in the list needs to be in the graph, their index matching in both the list and the graph
                 result.Add(new List<int>());
 
-                if (nodesList[index].Name == "ul")
+                if (node.Name == "ul")
                 {
+                    // ul has more nodes in it which need to be indexed and the subtree added here
+                    // the ul itself is not a node but a list of nodes, ul is just a placeholder
+                    
                     result[mostRecentHIndex].Add(index);
+
+                    //ExtractAndAddUlSubgraphRecursive(graph:result, parentIndex:mostRecentHIndex, nodeToParse: node, nodeToParseIndex:ref index);
                 }
-                else if (nodesList[index].Name.StartsWith("h"))
+                else if (node.Name.StartsWith("h"))
                 {
                     mostRecentHIndex = index;
 
                     // turn the h number into int and -2 to get the index for mostRecentHIndexes
-                    int hIndex = int.Parse(nodesList[index].Name[1].ToString()) - 2;
+                    int hIndex = int.Parse(node.Name[1].ToString()) - 2;
                     mostRecentHIndexes[hIndex] = index;
 
                     // if it's h3 then add it to the most recent h2 and if it's h4 add it to the most recent h3 and so on if hN add it to h(N-1)
@@ -88,9 +95,16 @@ namespace KnowledgeExtractor
                         result[mostRecentHIndexes[hIndex - 1]].Add(index);
                     }
                 }
+
+                index++;
             }
 
             return result;
+        }
+
+        private static void ExtractAndAddUlSubgraphRecursive(List<List<int>> graph, int parentIndex, HtmlNode nodeToParse, ref int nodeToParseIndex)
+        {
+            
         }
 
         private static string GetNodeHeadlineText(HtmlNode node)
