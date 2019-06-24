@@ -1,12 +1,14 @@
+﻿using KnowledgeExtractor;
 using System.Collections.Generic;
-using Xunit;
 using HtmlAgilityPack;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace DataStructuresAlgorithmsAndProblemsKnowledgeGraph.Tests
+namespace Tests
 {
+    [TestClass]
     public class Tests
     {
-        [Fact]
+        [TestMethod]
         public void ParseNodesListIntoGraphTest()
         {
             List<HtmlNode> nodes = new List<HtmlNode>();
@@ -35,9 +37,25 @@ namespace DataStructuresAlgorithmsAndProblemsKnowledgeGraph.Tests
                 new List<int>()
             };
 
-            List<List<int>> graph = Program.ParseNodesListIntoGraph(nodes);
+            List<List<int>> graph = WikipediaKnowledgeGraphExtractor.ParseNodesListIntoGraph(nodes);
 
-            Assert.Equal(expectedGraph, graph);
+            // assert.equal in .net core is smart enough to just compare expectedGraph and graph
+            // collectionAssert are equivalent is not smart enough to do this in VS test tools
+            // so I have to write it myself
+
+            Assert.AreEqual(expectedGraph.Count, graph.Count);
+            for(int index = 0; index < expectedGraph.Count; index++)
+            {
+                Assert.AreEqual(expectedGraph[index].Count, graph[index].Count);
+
+                if(expectedGraph[index].Count > 0)
+                {
+                    for(int index2 = 0; index2 < expectedGraph[index].Count; index2++)
+                    {
+                        Assert.AreEqual(expectedGraph[index][index2], graph[index][index2]);
+                    }
+                }
+            }
         }
 
         private HtmlNode CreateNodeWithName(string name)

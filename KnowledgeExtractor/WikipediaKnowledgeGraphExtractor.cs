@@ -1,28 +1,28 @@
-﻿using System;
-using HtmlAgilityPack;
-using System.Linq;
+﻿using HtmlAgilityPack;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace DataStructuresAlgorithmsAndProblemsKnowledgeGraph
+namespace KnowledgeExtractor
 {
-    public class Program
+    public static class WikipediaKnowledgeGraphExtractor
     {
-        public static List<string> WikipediaPagesToParse = new List<string>()
+        private static List<string> WikipediaPagesToParse = new List<string>()
         {
             "https://en.wikipedia.org/wiki/List_of_algorithms",
             "https://en.wikipedia.org/wiki/List_of_data_structures"
         };
 
-        public static void Main(string[] args)
+        public static string GetWikipediaListOfAlgorithmsPageUrl()
         {
-            Tuple<List<List<int>>, List<string>> knowledgeGraph = GetWikipediaPageKnowledgeGraph(WikipediaPagesToParse[0]);
-
-            PrintGraphWithNames(knowledgeGraph.Item1, knowledgeGraph.Item2);
-
-            Console.ReadKey();
+            return WikipediaPagesToParse[0];
         }
 
-        public static Tuple<List<List<int>>, List<string>> GetWikipediaPageKnowledgeGraph(string wikipediaPageUrl)
+        public static string GetWikipediaListOfDataStructuresPageUrl()
+        {
+            return WikipediaPagesToParse[1];
+        }
+
+        public static KnowledgeGraph GetWikipediaPageKnowledgeGraph(string wikipediaPageUrl)
         {
             List<string> nodeNames = new List<string>();
 
@@ -30,7 +30,12 @@ namespace DataStructuresAlgorithmsAndProblemsKnowledgeGraph
             relevantNodes.ForEach(node => nodeNames.Add(GetNodeHeadlineText(node)));
             List<List<int>> graph = ParseNodesListIntoGraph(relevantNodes);
 
-            Tuple<List<List<int>>, List<string>> result = new Tuple<List<List<int>>, List<string>>(graph, nodeNames);
+            KnowledgeGraph result = new KnowledgeGraph()
+            {
+                GraphSkeleton = graph,
+                NodeNames = nodeNames
+            };
+
             return result;
         }
 
@@ -38,7 +43,7 @@ namespace DataStructuresAlgorithmsAndProblemsKnowledgeGraph
         {
             // declaring & loading dom
             HtmlWeb web = new HtmlWeb();
-            HtmlDocument doc = new HtmlDocument();
+            HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
             doc = web.Load(wikipediaPageUrl);
 
             // get the div in which the page content is
@@ -88,71 +93,7 @@ namespace DataStructuresAlgorithmsAndProblemsKnowledgeGraph
             return result;
         }
 
-        public static void PrintGraph(List<List<int>> graph)
-        {
-            int index = 0;
-            foreach (List<int> list in graph)
-            {
-                Console.Write(index + ": ");
-                foreach (int x in list)
-                {
-                    Console.Write(x + ", ");
-                }
-
-                Console.WriteLine();
-                index++;
-            }
-        }
-
-        public static void PrintGraphWithNames(List<List<int>> graph, List<string> nodeNames)
-        {
-            // we'll use DFS to print the names according to the graph and with indentation
-            List<bool> visited = new List<bool>();
-            graph.ForEach(x => visited.Add(false));
-
-            for (int i = 0; i < graph.Count; i++)
-            {
-                if (!visited[i])
-                {
-                    DFSRecursive(graph, visited, i, nodeNames, 0);
-                }
-            }
-        }
-
-        public static void DFSRecursive(List<List<int>> graph, List<bool> visited, int currentNode, List<string> nodeNames, int level)
-        {
-            //Console.Write(currentNode + " - " + nodes[currentNode].Name);
-            Console.Write(nodeNames[currentNode]);
-            Console.WriteLine();
-            visited[currentNode] = true;
-            level++;
-            graph[currentNode].ForEach(x => {
-                if (!visited[x])
-                {
-                    PrintLevelSpaces(level);
-                    DFSRecursive(graph, visited, x, nodeNames, level);
-                }
-            });
-            level--;
-        }
-
-        private static void PrintLevelSpaces(int level)
-        {
-            for (int i = 1; i <= level; i++)
-            {
-                Console.Write("    ");
-            }
-        }
-
-        public static void PrintNodes(List<HtmlNode> relevantNodes)
-        {
-            foreach (HtmlNode node in relevantNodes)
-            {
-                Console.Write(node.Name + " --- " + GetNodeHeadlineText(node));
-            }
-        }
-
-        public static string GetNodeHeadlineText(HtmlNode node)
+        private static string GetNodeHeadlineText(HtmlNode node)
         {
             HtmlNode headline = node.ChildNodes.Where(x => x.HasClass("mw-headline")).FirstOrDefault();
             if (headline != null)
