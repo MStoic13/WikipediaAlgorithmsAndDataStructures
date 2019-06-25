@@ -8,7 +8,6 @@ Data structures, Algorithms and Problem types Knowledge Graph based on wikipedia
 * parses that graph of nodes into a knowledge graph because the nodes hierarchy doesn't correspond with the konwledge hierarchy
 * displays this knowledge graph using MSAGL which is a graph displaying library
 
-![Algorithms and Data Structures Knowledge Graph Rendering](./Output.WikipediaAlgosAndDataStructuresMDSColor.svg)
 <img src="./Output/WikipediaAlgosAndDataStructuresMDSColor.svg">
 
 ## Sources and tools used ##
