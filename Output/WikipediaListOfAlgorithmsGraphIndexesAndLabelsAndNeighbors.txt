@@ -1,0 +1,1874 @@
+0: h2: Automated planning
+0:
+1: h2: Combinatorial algorithms
+1: 2, 12, 85,
+2: h3: General combinatorial algorithms
+2: 3, 4, 5, 6,
+3: li: Brent's algorithm
+3:
+4: li: Floyd's cycle-finding algorithm
+4:
+5: li: Gale-Shapley algorithm
+5:
+6: li: Pseudorandom number generators
+6: 7, 8, 9, 10, 11,
+7: li: ACORN generator
+7:
+8: li: Blum Blum Shub
+8:
+9: li: Lagged Fibonacci generator
+9:
+10: li: Linear congruential generator
+10:
+11: li: Mersenne Twister
+11:
+12: h3: Graph algorithms
+12: 13, 14, 15, 16, 17, 18, 19, 22, 36, 57, 76,
+13: li: Coloring algorithm
+13:
+14: li: Hopcroft-Karp algorithm
+14:
+15: li: Hungarian algorithm
+15:
+16: li: Prüfer coding
+16:
+17: li: Tarjan's off-line lowest common ancestors algorithm
+17:
+18: li: Topological sort
+18:
+19: h4: Graph drawing
+19: 20, 21,
+20: li: Force-based algorithms
+20:
+21: li: Spectral layout
+21:
+22: h4: Network theory
+22: 23, 30,
+23: li: Network analysis
+23: 24,
+24: li: Link analysis
+24: 25, 26,
+25: li: Girvan-Newman algorithm
+25:
+26: li: Web link analysis
+26: 27, 28, 29,
+27: li: Hyperlink-Induced Topic Search
+27:
+28: li: PageRank
+28:
+29: li: TrustRank
+29:
+30: li: Flow networks
+30: 31, 32, 33, 34, 35,
+31: li: Dinic's algorithm
+31:
+32: li: Edmonds-Karp algorithm
+32:
+33: li: Ford-Fulkerson algorithm
+33:
+34: li: Karger's algorithm
+34:
+35: li: Push-relabel algorithm
+35:
+36: h4: Routing for graphs
+36: 37, 38, 39, 40, 41, 46, 47, 52, 53, 56,
+37: li: Edmonds' algorithm
+37:
+38: li: Euclidean minimum spanning tree
+38:
+39: li: Euclidean shortest path problem
+39:
+40: li: Longest path problem
+40:
+41: li: Minimum spanning tree
+41: 42, 43, 44, 45,
+42: li: Boruvka's algorithm
+42:
+43: li: Kruskal's algorithm
+43:
+44: li: Prim's algorithm
+44:
+45: li: Reverse-delete algorithm
+45:
+46: li: Nonblocking minimal spanning switch
+46:
+47: li: Shortest path problem
+47: 48, 49, 50, 51,
+48: li: Bellman-Ford algorithm
+48:
+49: li: Dijkstra's algorithm
+49:
+50: li: Floyd-Warshall algorithm
+50:
+51: li: Johnson's algorithm
+51:
+52: li: Transitive closure
+52:
+53: li: Traveling salesman problem
+53: 54, 55,
+54: li: Christofides algorithm
+54:
+55: li: Nearest neighbour algorithm
+55:
+56: li: Warnsdorff's rule
+56:
+57: h4: Graph search
+57: 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75,
+58: li: A*
+58:
+59: li: B*
+59:
+60: li: Backtracking
+60:
+61: li: Beam search
+61:
+62: li: Beam stack search
+62:
+63: li: Best-first search
+63:
+64: li: Bidirectional search
+64:
+65: li: Breadth-first search
+65:
+66: li: Brute-force search
+66:
+67: li: D*
+67:
+68: li: Depth-first search
+68:
+69: li: Dijkstra's algorithm
+69:
+70: li: General Problem Solver
+70:
+71: li: Iterative deepening depth-first search
+71:
+72: li: Jump point search
+72:
+73: li: Lexicographic breadth-first search
+73:
+74: li: Uniform-cost search
+74:
+75: li: SSS*
+75:
+76: h4: Subgraphs
+76: 77, 80, 84,
+77: li: Cliques
+77: 78, 79,
+78: li: Bron-Kerbosch algorithm
+78:
+79: li: MaxCliqueDyn maximum clique algorithm
+79:
+80: li: Strongly connected components
+80: 81, 82, 83,
+81: li: Path-based strong component algorithm
+81:
+82: li: Kosaraju's algorithm
+82:
+83: li: Tarjan's strongly connected components algorithm
+83:
+84: li: Subgraph isomorphism problem
+84:
+85: h3: Sequence algorithms
+85: 86, 102, 105, 115, 119, 124, 129, 173, 178,
+86: h4: Approximate sequence matching
+86: 87, 88, 95, 101,
+87: li: Bitap algorithm
+87:
+88: li: Phonetic algorithms
+88: 89, 90, 91, 92, 93, 94,
+89: li: Daitch-Mokotoff Soundex
+89:
+90: li: Double Metaphone
+90:
+91: li: Match rating approach
+91:
+92: li: Metaphone
+92:
+93: li: NYSIIS
+93:
+94: li: Soundex
+94:
+95: li: String metrics
+95: 96, 97, 98, 99, 100,
+96: li: Damerau-Levenshtein distance
+96:
+97: li: Dice's coefficient
+97:
+98: li: Hamming distance
+98:
+99: li: Jaro-Winkler distance
+99:
+100: li: Levenshtein edit distance
+100:
+101: li: Trigram search
+101:
+102: h4: Selection algorithms
+102: 103, 104,
+103: li: Quickselect
+103:
+104: li: Introselect
+104:
+105: h4: Sequence search
+105: 106, 107, 108, 109,
+106: li: Linear search
+106:
+107: li: Selection algorithm
+107:
+108: li: Ternary search
+108:
+109: li: Sorted lists
+109: 110, 111, 112, 113, 114,
+110: li: Binary search algorithm
+110:
+111: li: Fibonacci search technique
+111:
+112: li: Jump search
+112:
+113: li: Predictive search
+113:
+114: li: Uniform binary search
+114:
+115: h4: Sequence merging
+115: 116, 117, 118,
+116: li: Simple merge algorithm
+116:
+117: li: k-way merge algorithm
+117:
+118: li: Union (merge, with elements on the output not repeated)
+118:
+119: h4: Sequence permutations
+119: 120, 121, 122, 123,
+120: li: Fisher-Yates shuffle
+120:
+121: li: Schensted algorithm
+121:
+122: li: Steinhaus-Johnson-Trotter algorithm
+122:
+123: li: Heap's permutation generation algorithm
+123:
+124: h4: Sequence alignment
+124: 125, 126, 127, 128,
+125: li: Dynamic time warping
+125:
+126: li: Hirschberg's algorithm
+126:
+127: li: Needleman-Wunsch algorithm
+127:
+128: li: Smith-Waterman algorithm
+128:
+129: h4: Sequence sorting
+129: 130, 137, 140, 144, 151, 154, 162, 166, 171,
+130: li: Exchange sorts
+130: 131, 132, 133, 134, 135, 136,
+131: li: Bubble sort
+131:
+132: li: Cocktail shaker sort
+132:
+133: li: Comb sort
+133:
+134: li: Gnome sort
+134:
+135: li: Odd-even sort
+135:
+136: li: Quicksort
+136:
+137: li: Humorous or ineffective
+137: 138, 139,
+138: li: Bogosort
+138:
+139: li: Stooge sort
+139:
+140: li: Hybrid
+140: 141, 142, 143,
+141: li: Flashsort
+141:
+142: li: Introsort
+142:
+143: li: Timsort
+143:
+144: li: Insertion sorts
+144: 145, 146, 147, 148, 149, 150,
+145: li: Insertion sort
+145:
+146: li: Library sort
+146:
+147: li: Patience sorting
+147:
+148: li: Shell sort
+148:
+149: li: Tree sort
+149:
+150: li: Cycle sort
+150:
+151: li: Merge sorts
+151: 152, 153,
+152: li: Merge sort
+152:
+153: li: Strand sort
+153:
+154: li: Non-comparison sorts
+154: 155, 156, 157, 158, 159, 160, 161,
+155: li: Bead sort
+155:
+156: li: Bucket sort
+156:
+157: li: Burstsort
+157:
+158: li: Counting sort
+158:
+159: li: Pigeonhole sort
+159:
+160: li: Postman sort
+160:
+161: li: Radix sort
+161:
+162: li: Selection sorts
+162: 163, 164, 165,
+163: li: Heapsort
+163:
+164: li: Selection sort
+164:
+165: li: Smoothsort
+165:
+166: li: Other
+166: 167, 168, 169, 170,
+167: li: Bitonic sorter
+167:
+168: li: Pancake sorting
+168:
+169: li: Spaghetti sort
+169:
+170: li: Topological sort
+170:
+171: li: Unknown class
+171: 172,
+172: li: Samplesort
+172:
+173: h4: Subsequences
+173: 174, 175, 176, 177,
+174: li: Kadane's algorithm
+174:
+175: li: Longest common subsequence problem
+175:
+176: li: Longest increasing subsequence problem
+176:
+177: li: Shortest common supersequence problem
+177:
+178: h4: Substrings
+178: 179, 180, 187, 188,
+179: li: Longest common substring problem
+179:
+180: li: Substring search
+180: 181, 182, 183, 184, 185, 186,
+181: li: Aho-Corasick string matching algorithm
+181:
+182: li: Boyer-Moore string-search algorithm
+182:
+183: li: Boyer-Moore-Horspool algorithm
+183:
+184: li: Knuth-Morris-Pratt algorithm
+184:
+185: li: Rabin-Karp string search algorithm
+185:
+186: li: Zhu-Takaoka string matching algorithm
+186:
+187: li: Ukkonen's algorithm
+187:
+188: li: Matching wildcards
+188: 189, 190,
+189: li: Rich Salz
+189:
+190: li: Krauss matching wildcards algorithm
+190:
+191: h2: Computational mathematics
+191: 192, 196, 206, 240, 282, 403,
+192: h3: Abstract algebra
+192: 193, 194, 195,
+193: li: Chien search
+193:
+194: li: Schreier-Sims algorithm
+194:
+195: li: Todd-Coxeter algorithm
+195:
+196: h3: Computer algebra
+196: 197, 198, 199, 200, 201, 202, 203, 204, 205,
+197: li: Buchberger's algorithm
+197:
+198: li: Cantor-Zassenhaus algorithm
+198:
+199: li: Faugère F4 algorithm
+199:
+200: li: Gosper's algorithm
+200:
+201: li: Knuth-Bendix completion algorithm
+201:
+202: li: Multivariate division algorithm
+202:
+203: li: Pollard's kangaroo algorithm
+203:
+204: li: Polynomial long division
+204:
+205: li: Risch algorithm
+205:
+206: h3: Geometry
+206: 207, 208, 209, 210, 216, 217, 218, 219, 220, 221, 224, 225, 226, 227, 228, 229, 230,
+207: li: Closest pair problem
+207:
+208: li: Collision detection
+208:
+209: li: Cone algorithm
+209:
+210: li: Convex hull algorithms
+210: 211, 212, 213, 214, 215,
+211: li: Graham scan
+211:
+212: li: Quickhull
+212:
+213: li: Gift wrapping algorithm
+213:
+214: li: Chan's algorithm
+214:
+215: li: Kirkpatrick-Seidel algorithm
+215:
+216: li: Euclidean Distance Transform
+216:
+217: li: Geometric hashing
+217:
+218: li: Gilbert-Johnson-Keerthi distance algorithm
+218:
+219: li: Jump-and-Walk algorithm
+219:
+220: li: Laplacian smoothing
+220:
+221: li: Line segment intersection
+221: 222, 223,
+222: li: Bentley-Ottmann algorithm
+222:
+223: li: Shamos-Hoey algorithm
+223:
+224: li: Minimum bounding box algorithms
+224:
+225: li: Nearest neighbor search
+225:
+226: li: Point in polygon
+226:
+227: li: Point set registration
+227:
+228: li: Rotating calipers
+228:
+229: li: Shoelace algorithm
+229:
+230: li: Triangulation
+230: 231, 234, 235, 236, 239,
+231: li: Delaunay triangulation
+231: 232, 233,
+232: li: Ruppert's algorithm
+232:
+233: li: Chew's second algorithm
+233:
+234: li: Marching triangles
+234:
+235: li: Polygon triangulation
+235:
+236: li: Voronoi diagrams
+236: 237, 238,
+237: li: Bowyer-Watson algorithm
+237:
+238: li: Fortune's Algorithm
+238:
+239: li: Quasitriangulation
+239:
+240: h3: Number theoretic algorithms
+240: 241, 242, 243, 244, 249, 250, 251, 264, 268, 271, 272, 273,
+241: li: Binary GCD algorithm
+241:
+242: li: Booth's multiplication algorithm
+242:
+243: li: Chakravala method
+243:
+244: li: Discrete logarithm
+244: 245, 246, 247, 248,
+245: li: Baby-step giant-step
+245:
+246: li: Index calculus algorithm
+246:
+247: li: Pollard's rho algorithm for logarithms
+247:
+248: li: Pohlig&#8211;Hellman algorithm
+248:
+249: li: Euclidean algorithm
+249:
+250: li: Extended Euclidean algorithm
+250:
+251: li: Integer factorization
+251: 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263,
+252: li: Congruence of squares
+252:
+253: li: Dixon's algorithm
+253:
+254: li: Fermat's factorization method
+254:
+255: li: General number field sieve
+255:
+256: li: Lenstra elliptic curve factorization
+256:
+257: li: Pollard's p&#160;-&#160;1 algorithm
+257:
+258: li: Pollard's rho algorithm
+258:
+259: li: prime factorization algorithm
+259:
+260: li: Quadratic sieve
+260:
+261: li: Shor's algorithm
+261:
+262: li: Special number field sieve
+262:
+263: li: Trial division
+263:
+264: li: Multiplication algorithms
+264: 265, 266, 267,
+265: li: Karatsuba algorithm
+265:
+266: li: Schönhage-Strassen algorithm
+266:
+267: li: Toom-Cook multiplication
+267:
+268: li: Modular square root
+268: 269, 270,
+269: li: Tonelli-Shanks algorithm
+269:
+270: li: Cipolla's algorithm
+270:
+271: li: Odlyzko&#8211;Schönhage algorithm
+271:
+272: li: Lenstra-Lenstra-Lovász algorithm
+272:
+273: li: Primality tests
+273: 274, 275, 276, 277, 278, 279, 280, 281,
+274: li: AKS primality test
+274:
+275: li: Baillie-PSW primality test
+275:
+276: li: Fermat primality test
+276:
+277: li: Lucas primality test
+277:
+278: li: Miller&#8211;Rabin primality test
+278:
+279: li: Sieve of Atkin
+279:
+280: li: Sieve of Eratosthenes
+280:
+281: li: Sieve of Sundaram
+281:
+282: h3: Numerical algorithms
+282: 283, 296, 335, 338, 358, 387, 392, 394,
+283: h4: Differential equation solving
+283: 284, 285, 286, 287, 288, 290, 291, 295,
+284: li: Euler method
+284:
+285: li: Backward Euler method
+285:
+286: li: Trapezoidal rule (differential equations)
+286:
+287: li: Linear multistep methods
+287:
+288: li: Runge-Kutta methods
+288: 289,
+289: li: Euler integration
+289:
+290: li: Multigrid methods
+290:
+291: li: Partial differential equation
+291: 292, 293, 294,
+292: li: Finite difference method
+292:
+293: li: Crank-Nicolson method
+293:
+294: li: Lax-Wendroff
+294:
+295: li: Verlet integration
+295:
+296: h4: Elementary and special functions
+296: 297, 302, 309, 312, 315, 316, 322, 324, 325, 326, 331, 334,
+297: li: Computation of π
+297: 298, 299, 300, 301,
+298: li: Borwein's algorithm
+298:
+299: li: Gauss-Legendre algorithm
+299:
+300: li: Chudnovsky algorithm
+300:
+301: li: Bailey-Borwein-Plouffe formula
+301:
+302: li: Division algorithms
+302: 303, 304, 305, 306, 307, 308,
+303: li: Long division
+303:
+304: li: Restoring division
+304:
+305: li: Non-restoring division
+305:
+306: li: SRT division
+306:
+307: li: Newton-Raphson division
+307:
+308: li: Goldschmidt division
+308:
+309: li: Hyperbolic and Trigonometric Functions:
+309: 310, 311,
+310: li: BKM algorithm
+310:
+311: li: CORDIC
+311:
+312: li: Exponentiation:
+312: 313, 314,
+313: li: Addition-chain exponentiation
+313:
+314: li: Exponentiating by squaring
+314:
+315: li: Montgomery reduction
+315:
+316: li: Multiplication algorithms
+316: 317, 318, 319, 320, 321,
+317: li: Booth's multiplication algorithm
+317:
+318: li: Fürer's algorithm
+318:
+319: li: Karatsuba algorithm
+319:
+320: li: Schönhage-Strassen algorithm
+320:
+321: li: Toom-Cook multiplication
+321:
+322: li: Multiplicative inverse Algorithms
+322: 323,
+323: li: Newton's method
+323:
+324: li: Rounding functions
+324:
+325: li: Spigot algorithm
+325:
+326: li: Square and Nth root of a number:
+326: 327, 328, 329, 330,
+327: li: Alpha max plus beta min algorithm
+327:
+328: li: Methods of computing square roots
+328:
+329: li: nth root algorithm
+329:
+330: li: Shifting nth-root algorithm
+330:
+331: li: Summation:
+331: 332, 333,
+332: li: Binary splitting
+332:
+333: li: Kahan summation algorithm
+333:
+334: li: Unrestricted algorithm
+334:
+335: h4: Geometric
+335: 336, 337,
+336: li: Filtered back-projection
+336:
+337: li: Level set method
+337:
+338: h4: Interpolation and extrapolation
+338: 339, 340, 341, 342, 343, 344, 345, 351, 352, 354, 357,
+339: li: Birkhoff interpolation
+339:
+340: li: Cubic interpolation
+340:
+341: li: Hermite interpolation
+341:
+342: li: Lagrange interpolation
+342:
+343: li: Linear interpolation
+343:
+344: li: Monotone cubic interpolation
+344:
+345: li: Multivariate interpolation
+345: 346, 347, 348, 349, 350,
+346: li: Bicubic interpolation
+346:
+347: li: Bilinear interpolation
+347:
+348: li: Lanczos resampling
+348:
+349: li: Nearest-neighbor interpolation
+349:
+350: li: Tricubic interpolation
+350:
+351: li: Pareto interpolation
+351:
+352: li: Polynomial interpolation
+352: 353,
+353: li: Neville's algorithm
+353:
+354: li: Spline interpolation
+354: 355, 356,
+355: li: De Boor algorithm
+355:
+356: li: De Casteljau's algorithm
+356:
+357: li: Trigonometric interpolation
+357:
+358: h4: Linear algebra
+358: 359, 367, 368, 373, 383,
+359: li: Eigenvalue algorithms
+359: 360, 361, 362, 363, 364, 365, 366,
+360: li: Arnoldi iteration
+360:
+361: li: Inverse iteration
+361:
+362: li: Jacobi method
+362:
+363: li: Lanczos iteration
+363:
+364: li: Power iteration
+364:
+365: li: QR algorithm
+365:
+366: li: Rayleigh quotient iteration
+366:
+367: li: Gram-Schmidt process
+367:
+368: li: Matrix multiplication algorithms
+368: 369, 370, 371, 372,
+369: li: Cannon's algorithm
+369:
+370: li: Coppersmith-Winograd algorithm
+370:
+371: li: Freivalds' algorithm
+371:
+372: li: Strassen algorithm
+372:
+373: li: Solving
+373: 374, 375, 376, 377, 378, 379, 380, 381, 382,
+374: li: Biconjugate gradient method
+374:
+375: li: Conjugate gradient
+375:
+376: li: Gaussian elimination
+376:
+377: li: Gauss-Jordan elimination
+377:
+378: li: Gauss-Seidel method
+378:
+379: li: Levinson recursion
+379:
+380: li: Stone's method
+380:
+381: li: Successive over-relaxation
+381:
+382: li: Tridiagonal matrix algorithm
+382:
+383: li: Sparse matrix
+383: 384, 385, 386,
+384: li: Cuthill-McKee algorithm
+384:
+385: li: Minimum degree algorithm
+385:
+386: li: Symbolic Cholesky decomposition
+386:
+387: h4: Monte Carlo
+387: 388, 389, 390, 391,
+388: li: Gibbs sampling
+388:
+389: li: Hybrid Monte Carlo
+389:
+390: li: Metropolis-Hastings algorithm
+390:
+391: li: Wang and Landau algorithm
+391:
+392: h4: Numerical integration
+392: 393,
+393: li: MISER algorithm
+393:
+394: h4: Root finding
+394: 395, 396, 397, 398, 399, 400, 401, 402,
+395: li: Bisection method
+395:
+396: li: False position method
+396:
+397: li: Newton's method
+397:
+398: li: Halley's method
+398:
+399: li: Secant method
+399:
+400: li: False position method
+400:
+401: li: Ridder's method
+401:
+402: li: Muller's method
+402:
+403: h3: Optimization algorithms
+403: 404, 405, 406, 407, 408, 411, 422, 423, 424, 425, 426, 439, 440, 441, 442, 443, 452, 453, 456, 457, 459, 460, 465, 466, 467, 468,
+404: li: Alpha-beta pruning
+404:
+405: li: Branch and bound
+405:
+406: li: Bruss algorithm
+406:
+407: li: Chain matrix multiplication
+407:
+408: li: Combinatorial optimization
+408: 409, 410,
+409: li: Greedy randomized adaptive search procedure
+409:
+410: li: Hungarian method
+410:
+411: li: Constraint satisfaction
+411: 412, 416, 417, 418, 419,
+412: li: General algorithms for the constraint satisfaction
+412: 413, 414, 415,
+413: li: AC-3 algorithm
+413:
+414: li: Difference map algorithm
+414:
+415: li: Min conflicts algorithm
+415:
+416: li: Chaff algorithm
+416:
+417: li: Davis-Putnam algorithm
+417:
+418: li: Davis-Putnam-Logemann-Loveland algorithm
+418:
+419: li: Exact cover
+419: 420, 421,
+420: li: Algorithm X
+420:
+421: li: Dancing Links
+421:
+422: li: Cross-entropy method
+422:
+423: li: Differential evolution
+423:
+424: li: Dynamic Programming
+424:
+425: li: Ellipsoid method
+425:
+426: li: Evolutionary computation
+426: 427, 428, 429, 434, 435,
+427: li: Evolution strategy
+427:
+428: li: Gene expression programming
+428:
+429: li: Genetic algorithms
+429: 430, 431, 432, 433,
+430: li: Fitness proportionate selection
+430:
+431: li: Stochastic universal sampling
+431:
+432: li: Truncation selection
+432:
+433: li: Tournament selection
+433:
+434: li: Memetic algorithm
+434:
+435: li: Swarm intelligence
+435: 436, 437, 438,
+436: li: Ant colony optimization
+436:
+437: li: Bees algorithm
+437:
+438: li: Particle swarm
+438:
+439: li: golden section search
+439:
+440: li: Gradient descent
+440:
+441: li: Harmony search
+441:
+442: li: Interior point method
+442:
+443: li: Linear programming
+443: 444, 445, 446, 447, 450, 451,
+444: li: Benson's algorithm
+444:
+445: li: Dantzig-Wolfe decomposition
+445:
+446: li: Delayed column generation
+446:
+447: li: Integer linear programming
+447: 448, 449,
+448: li: Branch and cut
+448:
+449: li: Cutting-plane method
+449:
+450: li: Karmarkar's algorithm
+450:
+451: li: Simplex algorithm
+451:
+452: li: Line search
+452:
+453: li: Local search
+453: 454, 455,
+454: li: Random-restart hill climbing
+454:
+455: li: Tabu search
+455:
+456: li: Minimax
+456:
+457: li: Nearest neighbor search
+457: 458,
+458: li: Best Bin First
+458:
+459: li: Newton's method in optimization
+459:
+460: li: Nonlinear optimization
+460: 461, 462, 463, 464,
+461: li: BFGS method
+461:
+462: li: Gauss-Newton algorithm
+462:
+463: li: Levenberg-Marquardt algorithm
+463:
+464: li: Nelder-Mead method
+464:
+465: li: Odds algorithm
+465:
+466: li: Simulated annealing
+466:
+467: li: Stochastic tunneling
+467:
+468: li: Subset sum
+468:
+469: h2: Computational science
+469: 470, 474, 481, 484, 488, 493, 506,
+470: h3: Astronomy
+470: 471, 472, 473,
+471: li: Doomsday algorithm
+471:
+472: li: Zeller's congruence
+472:
+473: li: various
+473:
+474: h3: Bioinformatics
+474: 475, 476, 477, 478, 479, 480,
+475: li: Basic Local Alignment Search Tool
+475:
+476: li: Kabsch algorithm
+476:
+477: li: Velvet
+477:
+478: li: Sorting by signed reversals
+478:
+479: li: Maximum parsimony (phylogenetics)
+479:
+480: li: UPGMA
+480:
+481: h3: Geoscience
+481: 482, 483,
+482: li: Vincenty's formulae
+482:
+483: li: Geohash
+483:
+484: h3: Linguistics
+484: 485, 486, 487,
+485: li: Lesk algorithm
+485:
+486: li: Stemming algorithm
+486:
+487: li: Sukhotin's algorithm
+487:
+488: h3: Medicine
+488: 489, 490, 491, 492,
+489: li: ESC algorithm
+489:
+490: li: Manning Criteria
+490:
+491: li: Pulmonary embolism
+491:
+492: li: Texas Medication Algorithm Project
+492:
+493: h3: Physics
+493: 494, 495, 496, 497, 500, 503, 504, 505,
+494: li: Constraint algorithm
+494:
+495: li: Demon algorithm
+495:
+496: li: Featherstone's algorithm
+496:
+497: li: Ground state
+497: 498,
+498: li: Variational method
+498: 499,
+499: li: Ritz method
+499:
+500: li: N-body problems
+500: 501, 502,
+501: li: Barnes-Hut simulation
+501:
+502: li: Fast multipole method
+502:
+503: li: Rainflow-counting algorithm
+503:
+504: li: Sweep and prune
+504:
+505: li: VEGAS algorithm
+505:
+506: h3: Statistics
+506: 507, 508, 509, 511, 531, 536, 537, 541, 542, 544, 545, 546, 547,
+507: li: Algorithms for calculating variance
+507:
+508: li: Approximate counting algorithm
+508:
+509: li: Bayesian statistics
+509: 510,
+510: li: Nested sampling algorithm
+510:
+511: li: Clustering Algorithms
+511: 512, 513, 514, 515, 516, 517, 520, 521, 522, 523, 524, 525, 526, 527, 528, 529, 530,
+512: li: Average-linkage clustering
+512:
+513: li: Canopy clustering algorithm
+513:
+514: li: Complete-linkage clustering
+514:
+515: li: DBSCAN
+515:
+516: li: Expectation-maximization algorithm
+516:
+517: li: Fuzzy clustering
+517: 518, 519,
+518: li: Fuzzy c-means
+518:
+519: li: FLAME clustering
+519:
+520: li: KHOPCA clustering algorithm
+520:
+521: li: k-means clustering
+521:
+522: li: k-means++
+522:
+523: li: k-medoids
+523:
+524: li: Linde-Buzo-Gray algorithm
+524:
+525: li: Lloyd's algorithm
+525:
+526: li: OPTICS
+526:
+527: li: Single-linkage clustering
+527:
+528: li: SUBCLU
+528:
+529: li: Ward's method
+529:
+530: li: WACA clustering algorithm
+530:
+531: li: Estimation Theory
+531: 532, 534, 535,
+532: li: Expectation-maximization algorithm
+532: 533,
+533: li: Ordered subset expectation maximization
+533:
+534: li: Odds algorithm
+534:
+535: li: Kalman filter
+535:
+536: li: False nearest neighbor algorithm
+536:
+537: li: Hidden Markov model
+537: 538, 539, 540,
+538: li: Baum-Welch algorithm
+538:
+539: li: Forward-backward algorithm
+539:
+540: li: Viterbi algorithm
+540:
+541: li: Partial least squares regression
+541:
+542: li: Queuing theory
+542: 543,
+543: li: Buzen's algorithm
+543:
+544: li: RANSAC
+544:
+545: li: Scoring algorithm
+545:
+546: li: Yamartino method
+546:
+547: li: Ziggurat algorithm
+547:
+548: h2: Computer science
+548: 549, 551, 595, 648, 653, 693, 716, 721,
+549: h3: Computer architecture
+549: 550,
+550: li: Tomasulo algorithm
+550:
+551: h3: Computer graphics
+551: 552, 563, 567, 568, 569, 579, 584, 588, 589, 590, 593, 594,
+552: li: Clipping
+552: 553, 559,
+553: li: Line clipping
+553: 554, 555, 556, 557, 558,
+554: li: Cohen-Sutherland
+554:
+555: li: Cyrus-Beck
+555:
+556: li: Fast-clipping
+556:
+557: li: Liang-Barsky
+557:
+558: li: Nicholl-Lee-Nicholl
+558:
+559: li: Polygon clipping
+559: 560, 561, 562,
+560: li: Sutherland-Hodgman
+560:
+561: li: Vatti
+561:
+562: li: Weiler-Atherton
+562:
+563: li: Contour lines
+563: 564, 565, 566,
+564: li: Marching cubes
+564:
+565: li: Marching squares
+565:
+566: li: Marching tetrahedrons
+566:
+567: li: Discrete Green's Theorem
+567:
+568: li: Flood fill
+568:
+569: li: Global illumination
+569: 570, 571, 572, 573, 574, 575, 576, 577, 578,
+570: li: Ambient occlusion
+570:
+571: li: Beam tracing
+571:
+572: li: Cone tracing
+572:
+573: li: Image-based lighting
+573:
+574: li: Metropolis light transport
+574:
+575: li: Path tracing
+575:
+576: li: Photon mapping
+576:
+577: li: Radiosity
+577:
+578: li: Ray tracing
+578:
+579: li: Hidden surface removal
+579: 580, 581, 582, 583,
+580: li: Newell's algorithm
+580:
+581: li: Painter's algorithm
+581:
+582: li: Scanline rendering
+582:
+583: li: Warnock algorithm
+583:
+584: li: Line Drawing
+584: 585, 586, 587,
+585: li: Bresenham's line algorithm
+585:
+586: li: DDA line algorithm
+586:
+587: li: Xiaolin Wu's line algorithm
+587:
+588: li: Midpoint circle algorithm
+588:
+589: li: Ramer-Douglas-Peucker algorithm
+589:
+590: li: Shading
+590: 591, 592,
+591: li: Gouraud shading
+591:
+592: li: Phong shading
+592:
+593: li: Slerp
+593:
+594: li: Summed area table
+594:
+595: h3: Cryptography
+595: 596, 602, 607, 616, 621, 624, 629, 633, 636, 646, 647,
+596: li: Asymmetric (public key) encryption
+596: 597, 598, 599, 600, 601,
+597: li: ElGamal
+597:
+598: li: Elliptic curve cryptography
+598:
+599: li: MAE1
+599:
+600: li: NTRUEncrypt
+600:
+601: li: RSA
+601:
+602: li: Digital signatures
+602: 603, 606,
+603: li: DSA
+603: 604, 605,
+604: li: ECDSA
+604:
+605: li: EdDSA
+605:
+606: li: RSA
+606:
+607: li: Cryptographic hash functions
+607: 608, 609, 610, 611, 612, 613, 614, 615,
+608: li: BLAKE
+608:
+609: li: MD5
+609:
+610: li: RIPEMD-160
+610:
+611: li: SHA-1
+611:
+612: li: SHA-2
+612:
+613: li: SHA-3
+613:
+614: li: Tiger
+614:
+615: li: WHIRLPOOL
+615:
+616: li: Cryptographically secure pseudo-random number generators
+616: 617, 618, 619, 620,
+617: li: Blum Blum Shub
+617:
+618: li: Fortuna
+618:
+619: li: Linear-feedback shift register
+619:
+620: li: Yarrow algorithm
+620:
+621: li: Key exchange
+621: 622, 623,
+622: li: Diffie-Hellman key exchange
+622:
+623: li: Elliptic-curve Diffie-Hellman
+623:
+624: li: Key derivation functions
+624: 625, 626, 627, 628,
+625: li: bcrypt
+625:
+626: li: PBKDF2
+626:
+627: li: scrypt
+627:
+628: li: Argon2
+628:
+629: li: Message authentication codes
+629: 630, 631, 632,
+630: li: HMAC
+630:
+631: li: Poly1305
+631:
+632: li: SipHash
+632:
+633: li: Secret sharing
+633: 634, 635,
+634: li: Blakey's Scheme
+634:
+635: li: Shamir's Scheme
+635:
+636: li: Symmetric (secret key) encryption
+636: 637, 638, 639, 640, 641, 642, 643, 644, 645,
+637: li: Advanced Encryption Standard
+637:
+638: li: Blowfish
+638:
+639: li: Twofish
+639:
+640: li: Threefish
+640:
+641: li: Data Encryption Standard
+641:
+642: li: IDEA
+642:
+643: li: RC4 (cipher)
+643:
+644: li: Tiny Encryption Algorithm
+644:
+645: li: Salsa20
+645:
+646: li: Post-quantum cryptography
+646:
+647: li: Proof-of-work algorithms
+647:
+648: h3: Digital logic
+648: 649,
+649: li: Boolean minimization
+649: 650, 651, 652,
+650: li: Quine-McCluskey algorithm
+650:
+651: li: Petrick's method
+651:
+652: li: Espresso heuristic logic minimizer
+652:
+653: h3: Machine learning and statistical classification
+653: 654, 655, 661, 666, 667, 669, 672, 674, 675, 676, 683, 684, 688, 689, 690, 692,
+654: li: ALOPEX
+654:
+655: li: Association rule learning
+655: 656, 657, 658, 659, 660,
+656: li: Apriori algorithm
+656:
+657: li: Eclat algorithm
+657:
+658: li: FP-growth algorithm
+658:
+659: li: One-attribute rule
+659:
+660: li: Zero-attribute rule
+660:
+661: li: Boosting (meta-algorithm)
+661: 662, 663, 664, 665,
+662: li: AdaBoost
+662:
+663: li: BrownBoost
+663:
+664: li: LogitBoost
+664:
+665: li: LPBoost
+665:
+666: li: Bootstrap aggregating
+666:
+667: li: Computer Vision
+667: 668,
+668: li: Grabcut
+668:
+669: li: Decision Trees
+669: 670, 671,
+670: li: C4.5 algorithm
+670:
+671: li: ID3 algorithm
+671:
+672: li: Clustering
+672: 673,
+673: li: k-nearest neighbors
+673:
+674: li: Linde-Buzo-Gray algorithm
+674:
+675: li: Locality-sensitive hashing
+675:
+676: li: Neural Network
+676: 677, 678, 679, 680, 681, 682,
+677: li: Backpropagation
+677:
+678: li: Hopfield net
+678:
+679: li: Perceptron
+679:
+680: li: Pulse-coupled neural networks
+680:
+681: li: Radial basis function network
+681:
+682: li: Self-organizing map
+682:
+683: li: Random forest
+683:
+684: li: Reinforcement Learning
+684: 685, 686, 687,
+685: li: Q-learning
+685:
+686: li: State-Action-Reward-State-Action
+686:
+687: li: Temporal difference learning
+687:
+688: li: Relevance Vector Machine
+688:
+689: li: Supervised Learning
+689:
+690: li: Support Vector Machines
+690: 691,
+691: li: Structured SVM
+691:
+692: li: Winnow algorithm
+692:
+693: h3: Programming language theory
+693: 694, 695, 696, 697, 698, 699,
+694: li: C3 linearization
+694:
+695: li: Chaitin's algorithm
+695:
+696: li: Hindley-Milner type inference algorithm
+696:
+697: li: Rete algorithm
+697:
+698: li: Sethi-Ullman algorithm
+698:
+699: h4: Parsing
+699: 700, 701, 702, 703, 704, 705, 711, 712, 713, 714, 715,
+700: li: CYK algorithm
+700:
+701: li: Earley parser
+701:
+702: li: GLR parser
+702:
+703: li: Inside-outside algorithm
+703:
+704: li: LL parser
+704:
+705: li: LR parser
+705: 706, 707, 708, 709, 710,
+706: li: Canonical LR parser
+706:
+707: li: LALR (Look-ahead LR) parser
+707:
+708: li: Operator-precedence parser
+708:
+709: li: SLR (Simple LR) parser
+709:
+710: li: Simple precedence parser
+710:
+711: li: Packrat parser
+711:
+712: li: Recursive descent parser
+712:
+713: li: Shunting yard algorithm
+713:
+714: li: Pratt parser
+714:
+715: li: Lexical analysis
+715:
+716: h3: Quantum algorithms
+716: 717, 718, 719, 720,
+717: li: Deutsch-Jozsa algorithm
+717:
+718: li: Grover's algorithm
+718:
+719: li: Shor's algorithm
+719:
+720: li: Simon's algorithm
+720:
+721: h3: Theory of computation and automata
+721: 722, 723, 724,
+722: li: Hopcroft's algorithm
+722:
+723: li: Powerset construction
+723:
+724: li: Tarski-Kuratowski algorithm
+724:
+725: h2: Information theory and signal processing
+725: 726, 809,
+726: h3: Coding theory
+726: 727, 749, 791,
+727: h4: Error detection and correction
+727: 728, 732, 733, 734, 735, 739,
+728: li: BCH Codes
+728: 729, 730, 731,
+729: li: Berlekamp-Massey algorithm
+729:
+730: li: Peterson-Gorenstein-Zierler algorithm
+730:
+731: li: Reed-Solomon error correction
+731:
+732: li: BCJR algorithm
+732:
+733: li: Forward error correction
+733:
+734: li: Gray code
+734:
+735: li: Hamming codes
+735: 736, 737, 738,
+736: li: Hamming(7,4)
+736:
+737: li: Hamming distance
+737:
+738: li: Hamming weight
+738:
+739: li: Redundancy checks
+739: 740, 741, 742, 743, 744, 745, 746, 747, 748,
+740: li: Adler-32
+740:
+741: li: Cyclic redundancy check
+741:
+742: li: Damm algorithm
+742:
+743: li: Fletcher's checksum
+743:
+744: li: Longitudinal redundancy check
+744:
+745: li: Luhn algorithm
+745:
+746: li: Luhn mod N algorithm
+746:
+747: li: Parity
+747:
+748: li: Verhoeff algorithm
+748:
+749: h4: Lossless compression algorithms
+749: 750, 751, 752, 753, 754, 768, 776, 786, 787, 788, 789, 790,
+750: li: Burrows-Wheeler transform
+750:
+751: li: Context tree weighting
+751:
+752: li: Delta encoding
+752:
+753: li: Dynamic Markov compression
+753:
+754: li: Dictionary coders
+754: 755, 756, 757,
+755: li: Byte pair encoding
+755:
+756: li: DEFLATE
+756:
+757: li: Lempel-Ziv
+757: 758, 759, 760, 761, 762, 763, 764, 765, 766, 767,
+758: li: LZ77 and LZ78
+758:
+759: li: Lempel-Ziv Jeff Bonwick
+759:
+760: li: Lempel-Ziv-Markov chain algorithm
+760:
+761: li: Lempel-Ziv-Oberhumer
+761:
+762: li: Lempel-Ziv-Stac
+762:
+763: li: Lempel-Ziv-Storer-Szymanski
+763:
+764: li: Lempel-Ziv-Welch
+764:
+765: li: LZWL
+765:
+766: li: LZX
+766:
+767: li: Lempel-Ziv Ross Williams
+767:
+768: li: Entropy encoding
+768: 769, 771, 774, 775,
+769: li: Arithmetic coding
+769: 770,
+770: li: Range encoding
+770:
+771: li: Huffman coding
+771: 772, 773,
+772: li: Adaptive Huffman coding
+772:
+773: li: Package-merge algorithm
+773:
+774: li: Shannon-Fano coding
+774:
+775: li: Shannon-Fano-Elias coding
+775:
+776: li: Entropy coding with known entropy characteristics
+776: 777, 778, 779, 780, 781,
+777: li: Golomb coding
+777:
+778: li: Rice coding
+778:
+779: li: Truncated binary encoding
+779:
+780: li: Unary coding
+780:
+781: li: Universal codes
+781: 782, 783, 784, 785,
+782: li: Elias
+782:
+783: li: Exponential-Golomb coding
+783:
+784: li: Fibonacci coding
+784:
+785: li: Levenshtein coding
+785:
+786: li: Fast Efficient &amp; Lossless Image Compression System
+786:
+787: li: Incremental encoding
+787:
+788: li: Prediction by partial matching
+788:
+789: li: Run-length encoding
+789:
+790: li: SEQUITUR algorithm
+790:
+791: h4: Lossy compression algorithms
+791: 792, 793, 799, 806, 807, 808,
+792: li: 3Dc
+792:
+793: li: Audio
+793: 794, 795, 796, 797, 798,
+794: li: A-law algorithm
+794:
+795: li: Code-excited linear prediction
+795:
+796: li: Linear predictive coding
+796:
+797: li: Mu-law algorithm
+797:
+798: li: Warped Linear Predictive Coding
+798:
+799: li: Image Compression
+799: 800, 801, 802, 803, 804, 805,
+800: li: Block Truncation Coding
+800:
+801: li: Embedded Zerotree Wavelet
+801:
+802: li: Fast Cosine Transform algorithms
+802:
+803: li: Fractal compression
+803:
+804: li: Set Partitioning in Hierarchical Trees
+804:
+805: li: Wavelet compression
+805:
+806: li: Transform coding
+806:
+807: li: Video compression
+807:
+808: li: Vector quantization
+808:
+809: h3: Digital signal processing
+809: 810, 811, 818, 819, 820, 821, 822,
+810: li: Adaptive-additive algorithm
+810:
+811: li: Discrete Fourier transform
+811: 812, 813, 814, 815, 816, 817,
+812: li: Bluestein's FFT algorithm
+812:
+813: li: Bruun's FFT algorithm
+813:
+814: li: Cooley&#8211;Tukey FFT algorithm
+814:
+815: li: Fast Fourier transform
+815:
+816: li: Prime-factor FFT algorithm
+816:
+817: li: Rader's FFT algorithm
+817:
+818: li: Fast folding algorithm
+818:
+819: li: Gerchberg-Saxton algorithm
+819:
+820: li: Goertzel algorithm
+820:
+821: li: Karplus-Strong string synthesis
+821:
+822: h4: Image processing
+822: 823, 826, 827, 832, 833, 840, 841, 842, 843, 844,
+823: li: Contrast Enhancement
+823: 824, 825,
+824: li: Histogram equalization
+824:
+825: li: Adaptive histogram equalization
+825:
+826: li: Connected-component labeling
+826:
+827: li: Dithering
+827: 828, 829, 830, 831,
+828: li: Error diffusion
+828:
+829: li: Floyd-Steinberg dithering
+829:
+830: li: Ordered dithering
+830:
+831: li: Riemersma dithering
+831:
+832: li: Elser
+832:
+833: li: Feature detection
+833: 834, 835, 836, 837, 838, 839,
+834: li: Canny edge detector
+834:
+835: li: Generalised Hough transform
+835:
+836: li: Hough transform
+836:
+837: li: Marr-Hildreth algorithm
+837:
+838: li: SIFT
+838:
+839: li: SURF (Speeded Up Robust Features)
+839:
+840: li: Richardson-Lucy deconvolution
+840:
+841: li: Blind deconvolution
+841:
+842: li: Median filtering
+842:
+843: li: Seam carving
+843:
+844: li: Segmentation
+844: 845, 846, 847, 848,
+845: li: GrowCut algorithm
+845:
+846: li: Random walker algorithm
+846:
+847: li: Region growing
+847:
+848: li: Watershed transformation
+848:
+849: h2: Software engineering
+849: 850, 851, 852, 853, 857, 858,
+850: li: Cache algorithms
+850:
+851: li: CHS conversion
+851:
+852: li: Double dabble
+852:
+853: li: Hash Function
+853: 854, 855, 856,
+854: li: Fowler-Noll-Vo hash function
+854:
+855: li: Pearson hashing
+855:
+856: li: Zobrist hashing
+856:
+857: li: Unicode Collation Algorithm
+857:
+858: li: Xor swap algorithm
+858:
+859: h2: Database algorithms
+859: 860, 861,
+860: li: Algorithms for Recovery and Isolation Exploiting Semantics
+860:
+861: li: Join algorithms
+861: 862, 863, 864, 865,
+862: li: Block nested loop
+862:
+863: li: Hash join
+863:
+864: li: Nested loop join
+864:
+865: li: Sort-Merge Join
+865:
+866: h2: Distributed systems algorithms
+866: 867, 868, 869, 874, 877, 878, 884, 885, 887, 888,
+867: li: Bully algorithm
+867:
+868: li: Byzantine fault tolerance
+868:
+869: li: Clock synchronization
+869: 870, 871, 872, 873,
+870: li: Berkeley algorithm
+870:
+871: li: Cristian's algorithm
+871:
+872: li: Intersection algorithm
+872:
+873: li: Marzullo's algorithm
+873:
+874: li: Detection of Process Termination
+874: 875, 876,
+875: li: Dijkstra-Scholten algorithm
+875:
+876: li: Huang's algorithm
+876:
+877: li: Lamport ordering
+877:
+878: li: Mutual exclusion
+878: 879, 880, 881, 882, 883,
+879: li: Lamport's Distributed Mutual Exclusion Algorithm
+879:
+880: li: Naimi-Trehel's log(n) Algorithm
+880:
+881: li: Maekawa's Algorithm
+881:
+882: li: Raymond's Algorithm
+882:
+883: li: Ricart-Agrawala Algorithm
+883:
+884: li: Paxos algorithm
+884:
+885: li: Snapshot algorithm
+885: 886,
+886: li: Chandy-Lamport algorithm
+886:
+887: li: Vector clocks
+887:
+888: h3: Memory allocation and deallocation algorithms
+888: 889, 890, 896,
+889: li: Buddy memory allocation
+889:
+890: li: Garbage collectors
+890: 891, 892, 893, 894, 895,
+891: li: Cheney's algorithm
+891:
+892: li: Generational garbage collector
+892:
+893: li: Mark-compact algorithm
+893:
+894: li: Mark and sweep
+894:
+895: li: Semi-space collector
+895:
+896: li: Reference counting
+896:
+897: h2: Networking
+897: 898, 899, 900,
+898: li: Karn's algorithm
+898:
+899: li: Luleå algorithm
+899:
+900: li: Network congestion
+900: 901, 902, 903,
+901: li: Exponential backoff
+901:
+902: li: Nagle's algorithm
+902:
+903: li: Truncated binary exponential backoff
+903:
+904: h2: Operating systems algorithms
+904: 905, 906, 909, 913, 924,
+905: li: Banker's algorithm
+905:
+906: li: Page replacement algorithms
+906: 907, 908,
+907: li: Adaptive replacement cache
+907:
+908: li: Clock with Adaptive Replacement
+908:
+909: h3: Process synchronization
+909: 910, 911, 912,
+910: li: Dekker's algorithm
+910:
+911: li: Lamport's Bakery algorithm
+911:
+912: li: Peterson's algorithm
+912:
+913: h3: Scheduling
+913: 914, 915, 916, 917, 918, 919, 920, 921, 922, 923,
+914: li: Earliest deadline first scheduling
+914:
+915: li: Fair-share scheduling
+915:
+916: li: Least slack time scheduling
+916:
+917: li: List scheduling
+917:
+918: li: Multi level feedback queue
+918:
+919: li: Rate-monotonic scheduling
+919:
+920: li: Round-robin scheduling
+920:
+921: li: Shortest job next
+921:
+922: li: Shortest remaining time
+922:
+923: li: Top-nodes algorithm
+923:
+924: h3: I/O scheduling
+924: 925,
+925: h4: Disk scheduling
+925: 926, 927,
+926: li: Elevator algorithm
+926:
+927: li: Shortest seek first
+927:
+928: h2: See also
+928: 929, 930, 931, 932, 933, 934,
+929: li: List of data structures
+929:
+930: li: List of machine learning algorithms
+930:
+931: li: List of pathfinding algorithms
+931:
+932: li: List of algorithm general topics
+932:
+933: li: List of terms relating to algorithms and data structures
+933:
+934: li: Heuristic
+934:
+935: h2: References
+935:
+
+
