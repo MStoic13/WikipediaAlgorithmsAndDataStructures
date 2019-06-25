@@ -7,6 +7,15 @@ DONE - refator: move knowledge graph extraction from wikipedia into a net framew
 DONE - knowledge graph functionality: expand the uls to extract their info and put it in the graph
 DONE	- still needs li label extraction, there are some problems with indentation when printing in the sandbox and test 1 might fail
 DONE - try displaying the whole thing with the uls expanded see what it looks like - MDS view works best
-- extract the knowledge graph for algorithms, algorithm types, data structres and problem types and assign them different colors for the nodes by category
-- extract the connections between categories from wikipedia text - needs NLP and topic extraction probabaly and add the edges to the graph. plot the whole thing
+DONE - extract the knowledge graph for algorithms, algorithm types, data structres and problem types and assign them different colors for the nodes by category
+DONE 	- list of algos - red (hsa problem types backed into it) - I won't extract the problems from the algorithms because they are too tightly coupled
+DONE 	- list of data structures - blue
+- extract the connections between algorithms and data structures from wikipedia text - needs NLP and topic extraction probabaly and add the edges to the graph. plot the whole thing
+	- for each node in the algos and DS graphs, get its link. go to that page and count the numbre of times each Data Structure name (so all DS graph nodes labels) is mentioned. Then draw edges to those which are > 0. Do this for the DS graph, too because graphs can be implemented with lists and arrays and we want edges between those to show this. Otherwise the wikipedia list doesn't show this connection
+	- save the original pages html 
+	- save the parsed graphs (whatever KnGNode contains: index, label, html tag, link etc.) and add ability to load from file
+	- save the DS words count for each page (assign it to nodes in the graph and use the page link as index and also assing an int index)
+	- remove the reference and the see also nodes fro mthe graphs
+	- combine everything into a single graph so tha tindexes don't overlap and save it
+	- render svg and send to a studio to print a giant poster of it. Enjoy :)
 - readme: use a template to fill in more information such as tests, how to run, how to plot, what nugets it uses, how to setup etc.
