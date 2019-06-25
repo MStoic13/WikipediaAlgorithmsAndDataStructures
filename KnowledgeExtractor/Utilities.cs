@@ -5,6 +5,25 @@ namespace KnowledgeExtractor
 {
     public static class Utilities
     {
+        public static string FormatKnGraphIndexAndLabelsForPrinting(KnowledgeGraph graph)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach(KnGNode node in graph.KnGraph)
+            {
+                sb.AppendLine(node.Index + ": " + node.HtmlName + ": " + node.Label);
+                sb.Append(node.Index + ": ");
+                foreach (KnGNode neighbor in node.Neighbors)
+                {
+                    sb.Append(neighbor.Index + ", ");
+                }
+
+                sb.AppendLine();
+            }
+
+            return sb.ToString();
+        }
+
         public static string FormatKnGraphIndexesForPrinting(KnowledgeGraph graph)
         {
             StringBuilder sb = new StringBuilder();
@@ -33,14 +52,14 @@ namespace KnowledgeExtractor
             {
                 if (!visited[node.Index])
                 {
-                    DFSRecursive(visited, node, 0, ref sb);
+                    DFSRecursive(graph, visited, node, 0, ref sb);
                 }
             }
 
             return sb.ToString();
         }
 
-        private static void DFSRecursive(List<bool> visited, KnGNode currentNode, int level, ref StringBuilder sb)
+        private static void DFSRecursive(KnowledgeGraph graph, List<bool> visited, KnGNode currentNode, int level, ref StringBuilder sb)
         {
             sb.Append(currentNode.Label);
             sb.AppendLine();
@@ -48,12 +67,12 @@ namespace KnowledgeExtractor
 
             level++;
 
-            foreach (KnGNode neighbor in currentNode.Neighbors)
+            foreach (KnGNode neighbor in graph.KnGraph[currentNode.Index].Neighbors)
             {
                 if (!visited[neighbor.Index])
                 {
                     PrintLevelSpaces(level, ref sb);
-                    DFSRecursive(visited, neighbor, level, ref sb);
+                    DFSRecursive(graph, visited, neighbor, level, ref sb);
                 }
             }
 

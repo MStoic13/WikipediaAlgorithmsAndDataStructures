@@ -4,8 +4,9 @@ DONE - parse html from wikipedia page - https://html-agility-pack.net/
 DONE - turn the content of the page html into a graph DS - h2, h3, h4, ul
 DONE - find graph plot library - https://github.com/microsoft/automatic-graph-layout
 DONE - refator: move knowledge graph extraction from wikipedia into a net framework dll which all other projects can use. change the tests projects too to net framework and test your library. have a console app for debugging the dll and the form is for visualizaiton. and delete the net core projcet and the net core tests project since we will be switching to net framework otherwise the msagl libs don't work.
-- knowledge graph functionality: expand the uls to extract their info and put it in the graph
-- try displaying the whole thing with the uls expanded see what it looks like
+DONE - knowledge graph functionality: expand the uls to extract their info and put it in the graph
+DONE	- still needs li label extraction, there are some problems with indentation when printing in the sandbox and test 1 might fail
+DONE - try displaying the whole thing with the uls expanded see what it looks like - MDS view works best
 - extract the knowledge graph for algorithms, algorithm types, data structres and problem types and assign them different colors for the nodes by category
 - extract the connections between categories from wikipedia text - needs NLP and topic extraction probabaly and add the edges to the graph. plot the whole thing
 - readme: use a template to fill in more information such as tests, how to run, how to plot, what nugets it uses, how to setup etc.

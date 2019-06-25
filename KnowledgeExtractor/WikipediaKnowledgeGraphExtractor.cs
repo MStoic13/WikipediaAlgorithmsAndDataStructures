@@ -158,14 +158,35 @@ namespace KnowledgeExtractor
 
         private static string GetLiNodeLabel(HtmlNode node)
         {
-            return "li";
+            string nodeLabel = string.Empty;
 
             if(node.ChildNodes.Count == 1)
             {
-                return node.InnerText;
+                nodeLabel = node.InnerText;
+            }
+            else
+            {
+                // take the first child which has inner text and is not an ul
+                HtmlNode childNode = node.ChildNodes.First();
+                while (childNode.Name != "ul" && string.IsNullOrWhiteSpace(childNode.InnerText) && childNode.NextSibling != null)
+                {
+                    childNode = childNode.NextSibling;
+                }
+                nodeLabel = childNode.InnerText;
             }
 
-            return node.ChildNodes[1].InnerText;
+            nodeLabel = CleanNodeLabel(nodeLabel);
+
+            return nodeLabel;
+        }
+
+        private static string CleanNodeLabel(string nodeLabel)
+        {
+            string result = nodeLabel;
+            result = result.Replace("\n", string.Empty);
+            result = result.Replace("\r", string.Empty);
+            result = result.Replace("\t", string.Empty);
+            return result;
         }
 
         private static string GetNodeHeadlineText(HtmlNode node)
