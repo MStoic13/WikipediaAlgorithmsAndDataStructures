@@ -13,6 +13,11 @@ namespace DsAPKgForms
         private static Color ListOfAlgosH4Color = new Color(255, 199, 199);
         private static Color ListOfAlgosLiColor = new Color(255, 228, 228);
 
+        private static Color ListOfDataStructuresH2Color = new Color(0, 9, 255);
+        private static Color ListOfDataStructuresH3Color = new Color(142, 146, 255);
+        private static Color ListOfDataStructuresH4Color = new Color(199, 201, 255);
+        private static Color ListOfDataStructuresLiColor = new Color(228, 229, 255);
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -20,20 +25,21 @@ namespace DsAPKgForms
         static void Main()
         {
             // get the knowlege graph from wikipedia
-            KnowledgeGraph knowledgeGraph = WKGE.GetWikipediaPageKnowledgeGraph(WKGE.GetWikipediaListOfAlgorithmsPageUrl());
+            KnowledgeGraph listOfAlgorithmsKnGraph = WKGE.GetWikipediaPageKnowledgeGraph(WKGE.GetWikipediaListOfAlgorithmsPageUrl());
+            KnowledgeGraph listOfDataStructuresKnGraph = WKGE.GetWikipediaPageKnowledgeGraph(WKGE.GetWikipediaListOfDataStructuresPageUrl());
 
             //create a form 
             System.Windows.Forms.Form form = new System.Windows.Forms.Form();
             //create a viewer object 
             Microsoft.Msagl.GraphViewerGdi.GViewer viewer = new Microsoft.Msagl.GraphViewerGdi.GViewer();
             //create a graph object 
-            Microsoft.Msagl.Drawing.Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
-            //create the graph content 
-
+            Graph graph = new Graph("graph");
+            
+            //add the graph content for list of algorithms 
             Color color = Color.White;
-            for (int index = 0; index < knowledgeGraph.KnGraph.Count; index ++)
+            for (int index = 0; index < listOfAlgorithmsKnGraph.KnGraph.Count; index ++)
             {
-                switch (knowledgeGraph.KnGraph[index].HtmlName)
+                switch (listOfAlgorithmsKnGraph.KnGraph[index].HtmlName)
                 {
                     case "h2":
                         color = ListOfAlgosH2Color;
@@ -49,8 +55,33 @@ namespace DsAPKgForms
                         break;
                 }
 
-                graph.AddNode(knowledgeGraph.KnGraph[index].Label).Attr.FillColor = color;
-                knowledgeGraph.KnGraph[index].Neighbors.ForEach(neighbor => graph.AddEdge(knowledgeGraph.KnGraph[index].Label, knowledgeGraph.KnGraph[neighbor.Index].Label));
+                graph.AddNode(listOfAlgorithmsKnGraph.KnGraph[index].Label).Attr.FillColor = color;
+                listOfAlgorithmsKnGraph.KnGraph[index].Neighbors.ForEach(neighbor => 
+                    graph.AddEdge(listOfAlgorithmsKnGraph.KnGraph[index].Label, listOfAlgorithmsKnGraph.KnGraph[neighbor.Index].Label));
+            }
+
+            // add the graph content for list of data structures
+            for (int index = 0; index < listOfDataStructuresKnGraph.KnGraph.Count; index ++)
+            {
+                switch (listOfDataStructuresKnGraph.KnGraph[index].HtmlName)
+                {
+                    case "h2":
+                        color = ListOfDataStructuresH2Color;
+                        break;
+                    case "h3":
+                        color = ListOfDataStructuresH3Color;
+                        break;
+                    case "h4":
+                        color = ListOfDataStructuresH4Color;
+                        break;
+                    case "li":
+                        color = ListOfDataStructuresLiColor;
+                        break;
+                }
+
+                graph.AddNode(listOfDataStructuresKnGraph.KnGraph[index].Label).Attr.FillColor = color;
+                listOfDataStructuresKnGraph.KnGraph[index].Neighbors.ForEach(neighbor =>
+                    graph.AddEdge(listOfDataStructuresKnGraph.KnGraph[index].Label, listOfDataStructuresKnGraph.KnGraph[neighbor.Index].Label));
             }
             
             //bind the graph to the viewer 
