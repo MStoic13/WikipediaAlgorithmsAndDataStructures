@@ -5,6 +5,12 @@ namespace KnowledgeExtractor
 {
     public static class Utilities
     {
+        public enum OriginalGraphType
+        {
+            AlgorithmsKnGraph,
+            DataStructuresKnGraph
+        }
+
         public static string FormatKnGraphIndexAndLabelsForPrinting(KnowledgeGraph graph)
         {
             StringBuilder sb = new StringBuilder();

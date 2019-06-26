@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using static KnowledgeExtractor.Utilities;
 
 namespace KnowledgeExtractor
 {
@@ -6,9 +8,13 @@ namespace KnowledgeExtractor
     {
         public int Index { get; private set; }
 
+        public OriginalGraphType OriginalGraph { get; private set; }
+
         public string Label { get; private set; }
 
         public string HtmlName { get; private set; }
+
+        public Uri LinkToPage { get; private set; }
 
         public List<KnGNode> Neighbors { get; set; }
 
