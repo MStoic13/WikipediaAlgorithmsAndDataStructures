@@ -1,5 +1,4 @@
 ﻿using HtmlAgilityPack;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -88,8 +87,17 @@ namespace KnowledgeExtractor
                 }
                 else if (node.Name.StartsWith("h"))
                 {
+                    string nodeLabel = GetNodeHeadlineText(node);
+
+                    // stop processing nodes once you hit the see also node because we don't want any of the info after see also in the graph 
+                    // which is "see also"'s child nodes and the references section
+                    if (string.Equals(nodeLabel, "see also", System.StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        break;
+                    }
+
                     // only add h's and li's to the graph, not ul's
-                    result.KnGraph.Add(new KnGNode(index, GetNodeHeadlineText(node), node.Name));
+                    result.KnGraph.Add(new KnGNode(index, nodeLabel, node.Name));
 
                     mostRecentHIndex = index;
 
@@ -100,7 +108,7 @@ namespace KnowledgeExtractor
                     // if it's h3 then add it to the most recent h2 and if it's h4 add it to the most recent h3 and so on if hN add it to h(N-1)
                     if (hIndex > 0)
                     {
-                        result.KnGraph[mostRecentHIndexes[hIndex - 1]].Neighbors.Add(new KnGNode(index, GetNodeHeadlineText(node), node.Name));
+                        result.KnGraph[mostRecentHIndexes[hIndex - 1]].Neighbors.Add(new KnGNode(index, nodeLabel, node.Name));
                     }
 
                     index++;
