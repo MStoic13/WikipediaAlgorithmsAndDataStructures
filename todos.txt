@@ -10,12 +10,17 @@ DONE - try displaying the whole thing with the uls expanded see what it looks li
 DONE - extract the knowledge graph for algorithms, algorithm types, data structres and problem types and assign them different colors for the nodes by category
 DONE 	- list of algos - red (hsa problem types backed into it) - I won't extract the problems from the algorithms because they are too tightly coupled
 DONE 	- list of data structures - blue
-- extract the connections between algorithms and data structures from wikipedia text - needs NLP and topic extraction probabaly and add the edges to the graph. plot the whole thing
-	- for each node in the algos and DS graphs, get its link. go to that page and count the numbre of times each Data Structure name (so all DS graph nodes labels) is mentioned. Then draw edges to those which are > 0. Do this for the DS graph, too because graphs can be implemented with lists and arrays and we want edges between those to show this. Otherwise the wikipedia list doesn't show this connection
-	- save the original pages html 
-	- save the parsed graphs (whatever KnGNode contains: index, label, html tag, link etc.) and add ability to load from file
-	- save the DS words count for each page (assign it to nodes in the graph and use the page link as index and also assing an int index)
-	- remove the reference and the see also nodes fro mthe graphs
-	- combine everything into a single graph so tha tindexes don't overlap and save it
-	- render svg and send to a studio to print a giant poster of it. Enjoy :)
+- other
+	- render straight into the MDS configuration, instead of having to manually select that every time I render
+	- see what tests cases are missing and add them
+	- color by depth - dark at the root and light at the leaves - compute colors by the longest depth (li's can have ul's and so on so it's not just h2, h3, h4)
+- extract the connections between algorithms and data structures from text - add the edges to the graph.
+	- remove the "references" node and the "see also" node from the graphs
+	- combine everything into a single graph so that indexes don't overlap 
+	- for each node in the algos and data structure graphs, get its link. go to that page and count the numbre of times each Data Structure name (all DS graph nodes labels) is mentioned. Then draw edges to those which are > 0. Do this for the DS graph, too because graphs can be implemented with lists and arrays and we want edges between those to show this. Otherwise the wikipedia list doesn't show this connection
+- render svg and send to a studio to print a giant poster of it. Enjoy :)
+- save pages and graphs
+	- save the original wikipedia pages html (the content div only for Listo of Algorithms, List of DataStructures and all the nodes within them)
+	- save the resulting knowledge graph (whatever KnGNode contains: index, label, html tag, link etc.) and add ability to load the graph from this file
+	- save the Data structures pages words count for each page (assign it to nodes in the graph and use the page link as index and also assing an int index)
 - readme: use a template to fill in more information such as tests, how to run, how to plot, what nugets it uses, how to setup etc.

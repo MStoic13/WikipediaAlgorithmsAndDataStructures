@@ -72,7 +72,6 @@ namespace KnowledgeExtractor
 
             // you can rely that the nodes are in order h2 > h3 > h4 however ul can come at any point
             // and there are no duplicate pieces of knowledge (I mean you'll see more h2, h3, h4 and ul but they each correspond to a different piece of knowledge)
-
             // list with the last index of h2, h3, and h4 - compute index of this list by taking the h's number - 2
             List<int> mostRecentHIndexes = new List<int>() { 0, 0, 0 };
             // I need this variable to store the last known h for the ul elements since I can't know which h was laste just with the list
@@ -85,9 +84,6 @@ namespace KnowledgeExtractor
                 {
                     // ul has more nodes in it which need to be indexed and the subtree added here
                     // the ul itself is not a node but a list of nodes, ul is just a placeholder
-                    
-                    // result.KnGraph[mostRecentHIndex].Neighbors.Add(new KnGNode(index, GetNodeHeadlineText(node), node.Name));
-
                     ExtractAndAddUlSubgraphRecursive(graph: result, parentIndex: mostRecentHIndex, nodeToParse: node, nodeToParseIndex: ref index);
                 }
                 else if (node.Name.StartsWith("h"))
