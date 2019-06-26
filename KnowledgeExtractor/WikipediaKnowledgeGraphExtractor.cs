@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,34 +7,34 @@ namespace KnowledgeExtractor
 {
     public static class WikipediaKnowledgeGraphExtractor
     {
-        private static List<string> WikipediaPagesToParse = new List<string>()
+        private static List<Uri> WikipediaPagesToParse = new List<Uri>()
         {
-            "https://en.wikipedia.org/wiki/List_of_algorithms",
-            "https://en.wikipedia.org/wiki/List_of_data_structures"
+            new Uri("https://en.wikipedia.org/wiki/List_of_algorithms"),
+            new Uri("https://en.wikipedia.org/wiki/List_of_data_structures")
         };
 
-        public static string GetWikipediaListOfAlgorithmsPageUrl()
+        public static Uri GetWikipediaListOfAlgorithmsPageUri()
         {
             return WikipediaPagesToParse[0];
         }
 
-        public static string GetWikipediaListOfDataStructuresPageUrl()
+        public static Uri GetWikipediaListOfDataStructuresPageUri()
         {
             return WikipediaPagesToParse[1];
         }
 
-        public static KnowledgeGraph GetWikipediaPageKnowledgeGraph(string wikipediaPageUrl)
+        public static KnowledgeGraph GetWikipediaPageKnowledgeGraph(Uri wikipediaPageUri)
         {
-            List<HtmlNode> htmlNodes = ExtractRelevantHtmlNodesFromUrl(wikipediaPageUrl);
+            List<HtmlNode> htmlNodes = ExtractRelevantHtmlNodesFromUri(wikipediaPageUri);
             KnowledgeGraph result = ParseHtmlNodesIntoKnGraph(htmlNodes);
             return result;
         }
 
-        public static HtmlDocument GetHtmlDocumentFromUrl(string url)
+        public static HtmlDocument GetHtmlDocumentFromUri(Uri uri)
         {
             HtmlWeb web = new HtmlWeb();
             HtmlDocument doc = new HtmlDocument();
-            doc = web.Load(url);
+            doc = web.Load(uri);
             return doc;
         }
 
@@ -53,9 +54,9 @@ namespace KnowledgeExtractor
             return results;
         }
 
-        public static List<HtmlNode> ExtractRelevantHtmlNodesFromUrl(string wikipediaPageUrl)
+        public static List<HtmlNode> ExtractRelevantHtmlNodesFromUri(Uri wikipediaPageUri)
         {
-            HtmlDocument doc = GetHtmlDocumentFromUrl(wikipediaPageUrl);
+            HtmlDocument doc = GetHtmlDocumentFromUri(wikipediaPageUri);
             return ExtractRelevantHtmlNodesFromHtmlDoc(doc);
         }
 
@@ -118,9 +119,9 @@ namespace KnowledgeExtractor
             return result;
         }
 
-        public static KnowledgeGraph ExtractKnGraphFromUrl(string url)
+        public static KnowledgeGraph ExtractKnGraphFromUri(Uri uri)
         {
-            return ParseHtmlNodesIntoKnGraph(ExtractRelevantHtmlNodesFromUrl(url));
+            return ParseHtmlNodesIntoKnGraph(ExtractRelevantHtmlNodesFromUri(uri));
         }
 
         public static KnowledgeGraph ExtractKnGraphFromHtmlInput(string htmlInput)

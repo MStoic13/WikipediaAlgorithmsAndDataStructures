@@ -20,6 +20,7 @@ DONE 	- list of data structures - blue
 	- save the resulting knowledge graph (whatever KnGNode contains: index, label, html tag, link etc.) and add ability to load the graph from this file
 	- save the Data structures pages words count for each page (assign it to nodes in the graph and use the page link as index and also assing an int index)
 - other
+	DONE - change URLs from string to Uri
 	- render straight into the MDS configuration, instead of having to manually select that every time I render
 	- see what tests cases are missing and add them
 	- color by depth - dark at the root and light at the leaves - compute colors by the longest depth (li's can have ul's and so on so it's not just h2, h3, h4) or just set on 4 colors you can easily distinguish but then it's not clear when it gets into unfolding ul's. see if you can color the nodes / edges which have edges from both the algos graph and the data structures graph with a diff color so they stand out. hmm, that would make the whole DS graph the same color because all algos will be referencing some nodes in it. and for edges to show a subgraph, it might be a big cacophony or it might be interesting since the MDS rendering is fairly sparse without too many overlapping arrows. need to see.
