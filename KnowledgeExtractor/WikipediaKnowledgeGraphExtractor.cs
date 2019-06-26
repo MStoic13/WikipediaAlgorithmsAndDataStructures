@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace KnowledgeExtractor
@@ -26,7 +27,8 @@ namespace KnowledgeExtractor
         public static KnowledgeGraph GetWikipediaPageKnowledgeGraph(Uri wikipediaPageUri)
         {
             List<HtmlNode> htmlNodes = ExtractRelevantHtmlNodesFromUri(wikipediaPageUri);
-            KnowledgeGraph result = ParseHtmlNodesIntoKnGraph(htmlNodes);
+            KnowledgeGraph result = new KnowledgeGraph();
+            ParseHtmlNodesIntoKnGraph(result, htmlNodes);
             return result;
         }
 
@@ -42,6 +44,13 @@ namespace KnowledgeExtractor
         {
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(htmlInput);
+            return doc;
+        }
+
+        public static HtmlDocument GetHtmlDocumentFromHtmlFile(string htmlFilePath)
+        {
+            HtmlDocument doc = new HtmlDocument();
+            doc.Load(htmlFilePath);
             return doc;
         }
 
@@ -66,25 +75,81 @@ namespace KnowledgeExtractor
             return ExtractRelevantHtmlNodesFromHtmlDoc(doc);
         }
 
-        public static KnowledgeGraph ParseHtmlNodesIntoKnGraph(List<HtmlNode> htmlNodes)
+        private static List<HtmlNode> ExtractRelevantHtmlNodesFromHtmlFile(string filePath)
+        {
+            HtmlDocument doc = GetHtmlDocumentFromHtmlFile(filePath);
+            return ExtractRelevantHtmlNodesFromHtmlDoc(doc);
+        }
+
+        public static KnowledgeGraph ExtractKnGraphFromUri(Uri uri)
         {
             KnowledgeGraph result = new KnowledgeGraph();
+            ParseHtmlNodesIntoKnGraph(result, ExtractRelevantHtmlNodesFromUri(uri));
+            return result;
+        }
+
+        public static KnowledgeGraph ExtractKnGraphFromHtmlInput(string htmlInput)
+        {
+            KnowledgeGraph result = new KnowledgeGraph();
+            ParseHtmlNodesIntoKnGraph(result, ExtractRelevantHtmlNodesFromHtmlString(htmlInput));
+            return result;
+        }
+
+        public static KnowledgeGraph ExtractKnGraphFromHtmlInputs(List<string> htmlInputs)
+        {
+            KnowledgeGraph result = new KnowledgeGraph();
+
+            foreach (string htmlInput in htmlInputs)
+            {
+                ParseHtmlNodesIntoKnGraph(result, ExtractRelevantHtmlNodesFromHtmlString(htmlInput));
+            }
+
+            return result;
+        }
+
+        public static KnowledgeGraph ExtractKnGraphFromUris(List<Uri> uris)
+        {
+            KnowledgeGraph result = new KnowledgeGraph();
+
+            foreach (Uri uri in uris)
+            {
+                ParseHtmlNodesIntoKnGraph(result, ExtractRelevantHtmlNodesFromUri(uri));
+            }
+
+            return result;
+        }
+
+        public static KnowledgeGraph ExtractKnGraphFromHtmlFile(string filePath)
+        {
+            KnowledgeGraph result = new KnowledgeGraph();
+            ParseHtmlNodesIntoKnGraph(result, ExtractRelevantHtmlNodesFromHtmlFile(filePath));
+            return result;
+        }
+
+        public static void ParseHtmlNodesIntoKnGraph(KnowledgeGraph graph, List<HtmlNode> htmlNodes)
+        {
+            if(graph == null)
+            {
+                graph = new KnowledgeGraph();
+            }
+
+            // resume node index from the given graph. if empty, it starts at 0
+            int nodeIndex = graph.KnGraph.Count;
 
             // you can rely that the nodes are in order h2 > h3 > h4 however ul can come at any point
             // and there are no duplicate pieces of knowledge (I mean you'll see more h2, h3, h4 and ul but they each correspond to a different piece of knowledge)
             // list with the last index of h2, h3, and h4 - compute index of this list by taking the h's number - 2
-            List<int> mostRecentHIndexes = new List<int>() { 0, 0, 0 };
+            List<int> mostRecentHIndexes = new List<int>() { nodeIndex, nodeIndex, nodeIndex };
             // I need this variable to store the last known h for the ul elements since I can't know which h was laste just with the list
-            int mostRecentHIndex = 0;
-            int index = 0;
+            int mostRecentHIndex = nodeIndex;
 
-            foreach(var node in htmlNodes)
+            foreach (var node in htmlNodes)
             {
                 if (node.Name == "ul")
                 {
                     // ul has more nodes in it which need to be indexed and the subtree added here
                     // the ul itself is not a node but a list of nodes, ul is just a placeholder
-                    ExtractAndAddUlSubgraphRecursive(graph: result, parentIndex: mostRecentHIndex, nodeToParse: node, nodeToParseIndex: ref index);
+                    ExtractAndAddUlSubgraphRecursive(graph: graph, parentIndex: mostRecentHIndex, nodeToParse: node, nodeToParseIndex: ref nodeIndex);
                 }
                 else if (node.Name.StartsWith("h"))
                 {
@@ -98,35 +163,23 @@ namespace KnowledgeExtractor
                     }
 
                     // only add h's and li's to the graph, not ul's
-                    result.KnGraph.Add(new KnGNode(index, nodeLabel, node.Name));
+                    graph.KnGraph.Add(new KnGNode(nodeIndex, nodeLabel, node.Name));
 
-                    mostRecentHIndex = index;
+                    mostRecentHIndex = nodeIndex;
 
                     // turn the h number into int and -2 to get the index for mostRecentHIndexes
                     int hIndex = int.Parse(node.Name[1].ToString()) - 2;
-                    mostRecentHIndexes[hIndex] = index;
+                    mostRecentHIndexes[hIndex] = nodeIndex;
 
                     // if it's h3 then add it to the most recent h2 and if it's h4 add it to the most recent h3 and so on if hN add it to h(N-1)
                     if (hIndex > 0)
                     {
-                        result.KnGraph[mostRecentHIndexes[hIndex - 1]].Neighbors.Add(new KnGNode(index, nodeLabel, node.Name));
+                        graph.KnGraph[mostRecentHIndexes[hIndex - 1]].Neighbors.Add(new KnGNode(nodeIndex, nodeLabel, node.Name));
                     }
 
-                    index++;
+                    nodeIndex++;
                 }
             }
-
-            return result;
-        }
-
-        public static KnowledgeGraph ExtractKnGraphFromUri(Uri uri)
-        {
-            return ParseHtmlNodesIntoKnGraph(ExtractRelevantHtmlNodesFromUri(uri));
-        }
-
-        public static KnowledgeGraph ExtractKnGraphFromHtmlInput(string htmlInput)
-        {
-            return ParseHtmlNodesIntoKnGraph(ExtractRelevantHtmlNodesFromHtmlString(htmlInput));
         }
 
         public static void ExtractAndAddUlSubgraphRecursive(KnowledgeGraph graph, int parentIndex, HtmlNode nodeToParse, ref int nodeToParseIndex)
@@ -210,3 +263,4 @@ namespace KnowledgeExtractor
         }
     }
 }
+ 
