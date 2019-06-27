@@ -83,7 +83,10 @@ namespace DsAPKgForms
                 listOfDataStructuresKnGraph.KnGraph[index].Neighbors.ForEach(neighbor =>
                     graph.AddEdge(listOfDataStructuresKnGraph.KnGraph[index].Label, listOfDataStructuresKnGraph.KnGraph[neighbor.Index].Label));
             }
-            
+
+            // use the MDS rendering method
+            viewer.CurrentLayoutMethod = Microsoft.Msagl.GraphViewerGdi.LayoutMethod.MDS;
+
             //bind the graph to the viewer 
             viewer.Graph = graph;
             //associate the viewer with the form 
