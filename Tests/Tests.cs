@@ -1,10 +1,7 @@
 ﻿using KnowledgeExtractor;
-using System.Collections.Generic;
-using HtmlAgilityPack;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using System.Collections.Generic;
 using WKGE = KnowledgeExtractor.WikipediaKnowledgeGraphExtractor;
-using System.IO;
 
 namespace Tests
 {
@@ -14,47 +11,6 @@ namespace Tests
         [TestMethod]
         public void ExtractKnGraphFromHtmlInputOnePageTest()
         {
-            string htmlInput = @"
-            <div class="" mw-parser-output"">
-                <h2>H2Title</h2>
-                <h3>H3Title</h3>
-                <ul>
-                    <li>li-1</li>
-                    <li>li-2</li>
-                    <li>
-                        <p>li-3</p>
-                        <ul>
-                            <li>li-3.1</li>
-                            <li>li-3.2</li>
-                            <li>li-3.3</li>
-                            <li>
-                                <p>li-3.4</p>
-                                <ul>
-                                    <li>li-3.4.1</li>
-                                    <li>li-3.4.2</li>
-                                </ul>
-                            </li>
-                            <li>li-3.5</li>
-                            <li>
-                                <p>li-3.6</p>
-                                <ul>
-                                    <li>
-                                        <p>li-3.6.1</p>
-                                        <ul>
-                                            <li>li-3.6.1.1</li>
-                                            <li>li-3.6.1.2</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>li-3.7</li>
-                        </ul>
-                    </li>
-                    <li>li-4</li>
-                    <li>li-5</li>
-                </ul>
-            </div>";
-
             // expected graph
             KnowledgeGraph expectedKnGraph = new KnowledgeGraph();
             expectedKnGraph.KnGraph.Add(new KnGNode(0, "H2Title", "h2"));
@@ -94,110 +50,26 @@ namespace Tests
             expectedKnGraph.KnGraph.Add(new KnGNode(16, "li-3.7", "li"));
             expectedKnGraph.KnGraph.Add(new KnGNode(17, "li-4", "li"));
             expectedKnGraph.KnGraph.Add(new KnGNode(18, "li-5", "li"));
+            
+            KnowledgeGraph actualKnGraph = WKGE.ExtractKnGraphFromHtmlFile(filePath: "./TestInputs/page1.html");
 
-            // todo: need to finish fixing this. it's getting content root null for some reason in ExtractRelevantHtmlNodesFromHtmlDoc
-            // even if the parsed text is correct. so it can reach the file and get its content.
-            // KnowledgeGraph actualKnGraph = WKGE.ExtractKnGraphFromHtmlFile(filePath: "./TestInputs/page1.html");
-            // this also doesn't work. same error. smth is happening when it's in a file
-            // WKGE.ExtractKnGraphFromHtmlInput(File.ReadAllText("./TestInputs/page1.html"));
-
-            KnowledgeGraph actualKnGraph = WKGE.ExtractKnGraphFromHtmlInput(htmlInput);
-
-            Assert.AreEqual(expectedKnGraph.KnGraph.Count, actualKnGraph.KnGraph.Count);
-            for (int index = 0; index < expectedKnGraph.KnGraph.Count; index++)
-            {
-                Assert.AreEqual(expectedKnGraph.KnGraph[index].Neighbors.Count, actualKnGraph.KnGraph[index].Neighbors.Count);
-
-                if (expectedKnGraph.KnGraph[index].Neighbors.Count > 0)
-                {
-                    for (int index2 = 0; index2 < expectedKnGraph.KnGraph[index].Neighbors.Count; index2++)
-                    {
-                        Assert.AreEqual(expectedKnGraph.KnGraph[index].Neighbors[index2].Index, actualKnGraph.KnGraph[index].Neighbors[index2].Index);
-                    }
-                }
-            }
+            AssertKnowledgegraphsAreEqual(expectedKnGraph, actualKnGraph);
         }
 
         [TestMethod]
         public void ExtractKnGraphFromHtmlInputThreePagesTest()
         {
-            string htmlInput1 = @"
-            <div class="" mw-parser-output"">
-                <h2>H2Title</h2>
-                <h3>H3Title</h3>
-                <ul>
-                    <li>li-1</li>
-                    <li>li-2</li>
-                    <li>
-                        <p>li-3</p>
-                        <ul>
-                            <li>li-3.1</li>
-                            <li>li-3.2</li>
-                            <li>li-3.3</li>
-                            <li>
-                                <p>li-3.4</p>
-                                <ul>
-                                    <li>li-3.4.1</li>
-                                    <li>li-3.4.2</li>
-                                </ul>
-                            </li>
-                            <li>li-3.5</li>
-                            <li>
-                                <p>li-3.6</p>
-                                <ul>
-                                    <li>
-                                        <p>li-3.6.1</p>
-                                        <ul>
-                                            <li>li-3.6.1.1</li>
-                                            <li>li-3.6.1.2</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>li-3.7</li>
-                        </ul>
-                    </li>
-                    <li>li-4</li>
-                    <li>li-5</li>
-                </ul>
-            </div>";
-
-            string htmlInput2 = @"
-            <div class="" mw-parser-output"">
-                <h2>H2Title2</h2>
-                <h3>H3Title2</h3>
-                <ul>
-                    <li>page2li-1</li>
-                    <li>page2li-2</li>
-                    <li>page2li-4</li>
-                    <li>page2li-5</li>
-                </ul>
-            </div>";
-
-            string htmlInput3 = @"
-            <div class="" mw-parser-output"">
-                <h2>H2Title3</h2>
-                <h3>H3Title3</h3>
-                <ul>
-                    <li>page3li-1</li>
-                    <li>page3li-2</li>
-                    <li>
-                        <p>page3li-3</p>
-                        <ul>
-                            <li>page3li-3.1</li>
-                            <li>page3li-3.2</li>
-                            <li>page3li-3.3</li>
-                            <li>page3li-3.5</li>
-                            <li>page3li-3.7</li>
-                        </ul>
-                    </li>
-                    <li>page3li-4</li>
-                    <li>page3li-5</li>
-                </ul>
-            </div>";
+            // html input files
+            List<string> htmlFiles = new List<string>()
+            {
+                "./TestInputs/page1.html",
+                "./TestInputs/page2.html",
+                "./TestInputs/page3.html"
+            };
 
             // expected graph
             KnowledgeGraph expectedKnGraph = new KnowledgeGraph();
+            // graph from page 1
             expectedKnGraph.KnGraph.Add(new KnGNode(0, "H2Title", "h2"));
             expectedKnGraph.KnGraph[0].Neighbors.Add(new KnGNode(1, "H3Ttitle", "h3"));
             expectedKnGraph.KnGraph.Add(new KnGNode(1, "H3Title", "h3"));
@@ -235,10 +107,64 @@ namespace Tests
             expectedKnGraph.KnGraph.Add(new KnGNode(16, "li-3.7", "li"));
             expectedKnGraph.KnGraph.Add(new KnGNode(17, "li-4", "li"));
             expectedKnGraph.KnGraph.Add(new KnGNode(18, "li-5", "li"));
-            // todo: add to this graph the other 2 resulting graphs
+            //graph from page 2
+            expectedKnGraph.KnGraph.Add(new KnGNode(19, "H2Title2", "h2"));
+            expectedKnGraph.KnGraph[19].Neighbors.Add(new KnGNode(20, "H3Title2", "h3"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(20, "H3Title2", "h3"));
+            expectedKnGraph.KnGraph[20].Neighbors.Add(new KnGNode(21, "page2li-1", "li"));
+            expectedKnGraph.KnGraph[20].Neighbors.Add(new KnGNode(22, "page2li-2", "li"));
+            expectedKnGraph.KnGraph[20].Neighbors.Add(new KnGNode(23, "page2li-3", "li"));
+            expectedKnGraph.KnGraph[20].Neighbors.Add(new KnGNode(24, "page2li-4", "li"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(21, "page2li-1", "li"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(22, "page2li-2", "li"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(23, "page2li-3", "li"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(24, "page2li-4", "li"));
+            // graph from page 3
+            expectedKnGraph.KnGraph.Add(new KnGNode(25, "H2Title3", "h2"));
+            expectedKnGraph.KnGraph[25].Neighbors.Add(new KnGNode(26, "H3Title3", "h3"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(26, "H3Title3", "h3"));
+            expectedKnGraph.KnGraph[26].Neighbors.Add(new KnGNode(27, "page3li-1", "li"));
+            expectedKnGraph.KnGraph[26].Neighbors.Add(new KnGNode(28, "page3li-2", "li"));
+            expectedKnGraph.KnGraph[26].Neighbors.Add(new KnGNode(29, "page3li-3", "li"));
+            expectedKnGraph.KnGraph[26].Neighbors.Add(new KnGNode(35, "page3li-4", "li"));
+            expectedKnGraph.KnGraph[26].Neighbors.Add(new KnGNode(36, "page3li-5", "li"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(27, "page3li-1", "li"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(28, "page3li-2", "li"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(29, "page3li-3", "li"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(35, "page3li-4", "li"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(36, "page3li-5", "li"));
+            expectedKnGraph.KnGraph[29].Neighbors.Add(new KnGNode(30, "page3li-3.1", "li"));
+            expectedKnGraph.KnGraph[29].Neighbors.Add(new KnGNode(31, "page3li-3.2", "li"));
+            expectedKnGraph.KnGraph[29].Neighbors.Add(new KnGNode(32, "page3li-3.3", "li"));
+            expectedKnGraph.KnGraph[29].Neighbors.Add(new KnGNode(33, "page3li-3.4", "li"));
+            expectedKnGraph.KnGraph[29].Neighbors.Add(new KnGNode(34, "page3li-3.5", "li"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(30, "page3li-2.1.1", "li"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(31, "page3li-2.1.2", "li"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(32, "page3li-2.1.3", "li"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(33, "page3li-2.1.4", "li"));
+            expectedKnGraph.KnGraph.Add(new KnGNode(34, "page3li-2.1.5", "li"));
 
-            List<string> htmlInputs = new List<string>() { htmlInput1, htmlInput2, htmlInput3 };
-            KnowledgeGraph actualKnGraph = WKGE.ExtractKnGraphFromHtmlInputs(htmlInputs);
+            // compute actual graph from files
+            KnowledgeGraph actualKnGraph = WKGE.ExtractKnGraphFromHtmlFiles(htmlFiles);
+
+            AssertKnowledgegraphsAreEqual(expectedKnGraph, actualKnGraph);
+        }
+
+        private void AssertKnowledgegraphsAreEqual(KnowledgeGraph expectedKnGraph, KnowledgeGraph actualKnGraph)
+        {
+            Assert.AreEqual(expectedKnGraph.KnGraph.Count, actualKnGraph.KnGraph.Count);
+            for (int index = 0; index < expectedKnGraph.KnGraph.Count; index++)
+            {
+                Assert.AreEqual(expectedKnGraph.KnGraph[index].Neighbors.Count, actualKnGraph.KnGraph[index].Neighbors.Count);
+
+                if (expectedKnGraph.KnGraph[index].Neighbors.Count > 0)
+                {
+                    for (int index2 = 0; index2 < expectedKnGraph.KnGraph[index].Neighbors.Count; index2++)
+                    {
+                        Assert.AreEqual(expectedKnGraph.KnGraph[index].Neighbors[index2].Index, actualKnGraph.KnGraph[index].Neighbors[index2].Index);
+                    }
+                }
+            }
         }
     }
 }

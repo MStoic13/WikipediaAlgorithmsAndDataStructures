@@ -126,6 +126,18 @@ namespace KnowledgeExtractor
             return result;
         }
 
+        public static KnowledgeGraph ExtractKnGraphFromHtmlFiles(List<string> htmlFilePaths)
+        {
+            KnowledgeGraph result = new KnowledgeGraph();
+
+            foreach (string filePath in htmlFilePaths)
+            {
+                ParseHtmlNodesIntoKnGraph(result, ExtractRelevantHtmlNodesFromHtmlFile(filePath));
+            }
+
+            return result;
+        }
+
         public static void ParseHtmlNodesIntoKnGraph(KnowledgeGraph graph, List<HtmlNode> htmlNodes)
         {
             if(graph == null)
