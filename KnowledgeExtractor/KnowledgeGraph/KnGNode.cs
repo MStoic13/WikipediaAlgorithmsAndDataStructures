@@ -8,7 +8,7 @@ namespace KnowledgeExtractor
     {
         public int Index { get; private set; }
 
-        public OriginalGraphType OriginalGraph { get; private set; }
+        public OriginalGraphType OriginalGraphType { get; private set; }
 
         public string Label { get; private set; }
 
@@ -18,9 +18,10 @@ namespace KnowledgeExtractor
 
         public List<KnGNode> Neighbors { get; set; }
 
-        public KnGNode(int index, string label, string htmlName)
+        public KnGNode(int index, OriginalGraphType originalGraphType, string label, string htmlName)
         {
             this.Index = index;
+            this.OriginalGraphType = originalGraphType;
             this.Label = label;
             this.HtmlName = htmlName;
             this.Neighbors = new List<KnGNode>();

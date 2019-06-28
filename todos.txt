@@ -12,7 +12,7 @@ DONE 	- list of algos - red (hsa problem types backed into it) - I won't extract
 DONE 	- list of data structures - blue
 - extract the connections between algorithms and data structures from text - add the edges to the graph.
 	DONE - remove the "references" node and the "see also" node from the graphs
-	- combine everything into a single graph so that indexes don't overlap 
+	DONE - combine everything into a single graph so that indexes don't overlap and separate categories per url (each url has a diff graph type) so that you can color differently
 	- for each node in the algos and data structure graphs, get its link. go to that page and count the numbre of times each Data Structure name (all DS graph nodes labels) is mentioned. Then draw edges to those which are > 0. Do this for the DS graph, too because graphs can be implemented with lists and arrays and we want edges between those to show this. Otherwise the wikipedia list doesn't show this connection
 - render svg and send to a studio to print a giant poster of it. Enjoy :)
 - save pages and graphs

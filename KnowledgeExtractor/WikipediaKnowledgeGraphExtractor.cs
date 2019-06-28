@@ -161,7 +161,7 @@ namespace KnowledgeExtractor
                 {
                     // ul has more nodes in it which need to be indexed and the subtree added here
                     // the ul itself is not a node but a list of nodes, ul is just a placeholder
-                    ExtractAndAddUlSubgraphRecursive(graph: graph, parentIndex: mostRecentHIndex, nodeToParse: node, nodeToParseIndex: ref nodeIndex);
+                    ExtractAndAddUlSubgraphRecursive(graph: graph, parentIndex: mostRecentHIndex, nodeToParse: node, nodeToParseIndex: ref nodeIndex, originalGraphType: originalGraphType);
                 }
                 else if (node.Name.StartsWith("h"))
                 {
@@ -175,7 +175,7 @@ namespace KnowledgeExtractor
                     }
 
                     // only add h's and li's to the graph, not ul's
-                    graph.KnGraph.Add(new KnGNode(nodeIndex, nodeLabel, node.Name));
+                    graph.KnGraph.Add(new KnGNode(nodeIndex, originalGraphType, nodeLabel, node.Name));
 
                     mostRecentHIndex = nodeIndex;
 
@@ -186,7 +186,7 @@ namespace KnowledgeExtractor
                     // if it's h3 then add it to the most recent h2 and if it's h4 add it to the most recent h3 and so on if hN add it to h(N-1)
                     if (hIndex > 0)
                     {
-                        graph.KnGraph[mostRecentHIndexes[hIndex - 1]].Neighbors.Add(new KnGNode(nodeIndex, nodeLabel, node.Name));
+                        graph.KnGraph[mostRecentHIndexes[hIndex - 1]].Neighbors.Add(new KnGNode(nodeIndex, originalGraphType, nodeLabel, node.Name));
                     }
 
                     nodeIndex++;
@@ -194,12 +194,12 @@ namespace KnowledgeExtractor
             }
         }
 
-        private static void ExtractAndAddUlSubgraphRecursive(KnowledgeGraph graph, int parentIndex, HtmlNode nodeToParse, ref int nodeToParseIndex)
+        private static void ExtractAndAddUlSubgraphRecursive(KnowledgeGraph graph, int parentIndex, HtmlNode nodeToParse, ref int nodeToParseIndex, OriginalGraphType originalGraphType)
         {
             foreach (var child in nodeToParse.ChildNodes.Where(n => n.Name == "li"))
             {
                 // and add it as a parent, too
-                graph.KnGraph.Add(new KnGNode(index: nodeToParseIndex, label: GetLiNodeLabel(child), htmlName: "li"));
+                graph.KnGraph.Add(new KnGNode(index: nodeToParseIndex, originalGraphType: originalGraphType, label: GetLiNodeLabel(child), htmlName: "li"));
 
                 // 1 li can only have 1 ul in it
                 HtmlNode ulNode = child.ChildNodes.Where(node => node.Name == "ul").FirstOrDefault();
@@ -208,7 +208,7 @@ namespace KnowledgeExtractor
                 if (ulNode != null)
                 {
                     // add the li node to the graph because it will be the parent of its ul's items and increase the index counter
-                    graph.KnGraph[parentIndex].Neighbors.Add(new KnGNode(index: nodeToParseIndex, label: GetLiNodeLabel(child), htmlName: "li"));
+                    graph.KnGraph[parentIndex].Neighbors.Add(new KnGNode(index: nodeToParseIndex, originalGraphType: originalGraphType, label: GetLiNodeLabel(child), htmlName: "li"));
 
                     int newParentNodeIndex = nodeToParseIndex;
                     nodeToParseIndex++;
@@ -216,11 +216,12 @@ namespace KnowledgeExtractor
                         graph: graph, 
                         parentIndex: newParentNodeIndex, 
                         nodeToParse: ulNode, 
-                        nodeToParseIndex: ref nodeToParseIndex);
+                        nodeToParseIndex: ref nodeToParseIndex,
+                        originalGraphType: originalGraphType);
                 }
                 else
                 {
-                    graph.KnGraph[parentIndex].Neighbors.Add(new KnGNode(index: nodeToParseIndex, label: GetLiNodeLabel(child), htmlName: "li"));
+                    graph.KnGraph[parentIndex].Neighbors.Add(new KnGNode(index: nodeToParseIndex, originalGraphType: originalGraphType, label: GetLiNodeLabel(child), htmlName: "li"));
                     nodeToParseIndex++;
                 }
             }
