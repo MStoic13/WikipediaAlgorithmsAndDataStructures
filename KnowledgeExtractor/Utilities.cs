@@ -26,7 +26,7 @@ namespace KnowledgeExtractor
 
             foreach(KnGNode node in graph.KnGraph)
             {
-                sb.AppendLine(node.OriginalGraphType + "-" + node.Index + ": " + node.HtmlName + ": " + node.Label);
+                sb.AppendLine(node.OriginalGraphType + "-" + node.Index + ": " + node.HtmlName + ": " + node.Label + ", " + node.LinkToPage);
                 sb.Append(node.Index + ": ");
                 foreach (KnGNode neighbor in node.Neighbors)
                 {

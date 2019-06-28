@@ -18,12 +18,13 @@ namespace KnowledgeExtractor
 
         public List<KnGNode> Neighbors { get; set; }
 
-        public KnGNode(int index, OriginalGraphType originalGraphType, string label, string htmlName)
+        public KnGNode(int index, OriginalGraphType originalGraphType, string label, string htmlName, Uri linkToPage)
         {
             this.Index = index;
             this.OriginalGraphType = originalGraphType;
             this.Label = label;
             this.HtmlName = htmlName;
+            this.LinkToPage = linkToPage;
             this.Neighbors = new List<KnGNode>();
         }
     }

@@ -166,6 +166,7 @@ namespace KnowledgeExtractor
                 else if (node.Name.StartsWith("h"))
                 {
                     string nodeLabel = GetNodeHeadlineText(node);
+                    Uri nodeLinkToPage = GetUriFromNode(node);
 
                     // stop processing nodes once you hit the see also node because we don't want any of the info after see also in the graph 
                     // which is "see also"'s child nodes and the references section
@@ -175,7 +176,7 @@ namespace KnowledgeExtractor
                     }
 
                     // only add h's and li's to the graph, not ul's
-                    graph.KnGraph.Add(new KnGNode(nodeIndex, originalGraphType, nodeLabel, node.Name));
+                    graph.KnGraph.Add(new KnGNode(nodeIndex, originalGraphType, nodeLabel, node.Name, nodeLinkToPage));
 
                     mostRecentHIndex = nodeIndex;
 
@@ -186,7 +187,7 @@ namespace KnowledgeExtractor
                     // if it's h3 then add it to the most recent h2 and if it's h4 add it to the most recent h3 and so on if hN add it to h(N-1)
                     if (hIndex > 0)
                     {
-                        graph.KnGraph[mostRecentHIndexes[hIndex - 1]].Neighbors.Add(new KnGNode(nodeIndex, originalGraphType, nodeLabel, node.Name));
+                        graph.KnGraph[mostRecentHIndexes[hIndex - 1]].Neighbors.Add(new KnGNode(nodeIndex, originalGraphType, nodeLabel, node.Name, nodeLinkToPage));
                     }
 
                     nodeIndex++;
@@ -196,10 +197,12 @@ namespace KnowledgeExtractor
 
         private static void ExtractAndAddUlSubgraphRecursive(KnowledgeGraph graph, int parentIndex, HtmlNode nodeToParse, ref int nodeToParseIndex, OriginalGraphType originalGraphType)
         {
-            foreach (var child in nodeToParse.ChildNodes.Where(n => n.Name == "li"))
+            foreach (HtmlNode child in nodeToParse.ChildNodes.Where(n => n.Name == "li"))
             {
+                Uri nodeLinkToPage = GetUriFromNode(child);
+
                 // and add it as a parent, too
-                graph.KnGraph.Add(new KnGNode(index: nodeToParseIndex, originalGraphType: originalGraphType, label: GetLiNodeLabel(child), htmlName: "li"));
+                graph.KnGraph.Add(new KnGNode(index: nodeToParseIndex, originalGraphType: originalGraphType, label: GetLiNodeLabel(child), htmlName: "li", linkToPage: nodeLinkToPage));
 
                 // 1 li can only have 1 ul in it
                 HtmlNode ulNode = child.ChildNodes.Where(node => node.Name == "ul").FirstOrDefault();
@@ -208,7 +211,7 @@ namespace KnowledgeExtractor
                 if (ulNode != null)
                 {
                     // add the li node to the graph because it will be the parent of its ul's items and increase the index counter
-                    graph.KnGraph[parentIndex].Neighbors.Add(new KnGNode(index: nodeToParseIndex, originalGraphType: originalGraphType, label: GetLiNodeLabel(child), htmlName: "li"));
+                    graph.KnGraph[parentIndex].Neighbors.Add(new KnGNode(index: nodeToParseIndex, originalGraphType: originalGraphType, label: GetLiNodeLabel(child), htmlName: "li", linkToPage: nodeLinkToPage));
 
                     int newParentNodeIndex = nodeToParseIndex;
                     nodeToParseIndex++;
@@ -221,10 +224,26 @@ namespace KnowledgeExtractor
                 }
                 else
                 {
-                    graph.KnGraph[parentIndex].Neighbors.Add(new KnGNode(index: nodeToParseIndex, originalGraphType: originalGraphType, label: GetLiNodeLabel(child), htmlName: "li"));
+                    graph.KnGraph[parentIndex].Neighbors.Add(new KnGNode(index: nodeToParseIndex, originalGraphType: originalGraphType, label: GetLiNodeLabel(child), htmlName: "li", linkToPage: nodeLinkToPage));
                     nodeToParseIndex++;
                 }
             }
+        }
+
+        private static Uri GetUriFromNode(HtmlNode node)
+        {
+            HtmlNode linkElementInNode = node.ChildNodes.Where(c => c.Name == "a").FirstOrDefault();
+            
+            if (linkElementInNode != null)
+            {
+                string url = linkElementInNode.Attributes["href"].Value;
+                if (!string.IsNullOrEmpty(url))
+                {
+                    return new Uri("https://en.wikipedia.org" + url);
+                }
+            }
+
+            return null;
         }
 
         private static string GetLiNodeLabel(HtmlNode node)
