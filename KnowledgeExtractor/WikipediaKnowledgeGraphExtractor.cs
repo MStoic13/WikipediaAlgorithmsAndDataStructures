@@ -1,27 +1,27 @@
 ﻿using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using static KnowledgeExtractor.Utilities;
 
 namespace KnowledgeExtractor
 {
     public static class WikipediaKnowledgeGraphExtractor
     {
-        public static List<Uri> WikipediaPagesToParse = new List<Uri>()
+        public static List<Tuple<Uri, OriginalGraphType>> WikipediaPagesToParse = new List<Tuple<Uri, OriginalGraphType>>()
         {
-            new Uri("https://en.wikipedia.org/wiki/List_of_algorithms"),
-            new Uri("https://en.wikipedia.org/wiki/List_of_data_structures")
+            new Tuple<Uri, OriginalGraphType>(new Uri("https://en.wikipedia.org/wiki/List_of_algorithms"), OriginalGraphType.AlgorithmsKnGraph),
+            new Tuple<Uri, OriginalGraphType>(new Uri("https://en.wikipedia.org/wiki/List_of_data_structures"), OriginalGraphType.DataStructuresKnGraph)
         };
 
         public static Uri GetWikipediaListOfAlgorithmsPageUri()
         {
-            return WikipediaPagesToParse[0];
+            return WikipediaPagesToParse[0].Item1;
         }
 
         public static Uri GetWikipediaListOfDataStructuresPageUri()
         {
-            return WikipediaPagesToParse[1];
+            return WikipediaPagesToParse[1].Item1;
         }
 
         public static HtmlDocument GetHtmlDocumentFromUri(Uri uri)
