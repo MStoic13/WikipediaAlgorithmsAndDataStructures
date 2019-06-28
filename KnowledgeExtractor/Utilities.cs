@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace KnowledgeExtractor
@@ -7,8 +8,16 @@ namespace KnowledgeExtractor
     {
         public enum OriginalGraphType
         {
+            Unknown,
             AlgorithmsKnGraph,
             DataStructuresKnGraph
+        }
+
+        public struct UriAndOriginalGraphType
+        {
+            public Uri Uri;
+
+            public OriginalGraphType OriginalGraphType;
         }
 
         public static string FormatKnGraphIndexAndLabelsForPrinting(KnowledgeGraph graph)

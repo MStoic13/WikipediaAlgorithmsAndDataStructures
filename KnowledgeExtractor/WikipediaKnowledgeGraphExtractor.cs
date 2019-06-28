@@ -8,20 +8,28 @@ namespace KnowledgeExtractor
 {
     public static class WikipediaKnowledgeGraphExtractor
     {
-        public static List<Tuple<Uri, OriginalGraphType>> WikipediaPagesToParse = new List<Tuple<Uri, OriginalGraphType>>()
+        public static List<UriAndOriginalGraphType> WikipediaPagesToParse = new List<UriAndOriginalGraphType>()
         {
-            new Tuple<Uri, OriginalGraphType>(new Uri("https://en.wikipedia.org/wiki/List_of_algorithms"), OriginalGraphType.AlgorithmsKnGraph),
-            new Tuple<Uri, OriginalGraphType>(new Uri("https://en.wikipedia.org/wiki/List_of_data_structures"), OriginalGraphType.DataStructuresKnGraph)
+            new UriAndOriginalGraphType()
+            {
+                Uri = new Uri("https://en.wikipedia.org/wiki/List_of_algorithms"),
+                OriginalGraphType = OriginalGraphType.AlgorithmsKnGraph
+            },
+            new UriAndOriginalGraphType()
+            {
+                Uri = new Uri("https://en.wikipedia.org/wiki/List_of_data_structures"),
+                OriginalGraphType = OriginalGraphType.DataStructuresKnGraph
+            }, 
         };
 
         public static Uri GetWikipediaListOfAlgorithmsPageUri()
         {
-            return WikipediaPagesToParse[0].Item1;
+            return WikipediaPagesToParse[0].Uri;
         }
 
         public static Uri GetWikipediaListOfDataStructuresPageUri()
         {
-            return WikipediaPagesToParse[1].Item1;
+            return WikipediaPagesToParse[1].Uri;
         }
 
         public static HtmlDocument GetHtmlDocumentFromUri(Uri uri)
@@ -71,13 +79,13 @@ namespace KnowledgeExtractor
             return result;
         }
 
-        public static KnowledgeGraph ExtractKnGraphFromUris(List<Uri> uris)
+        public static KnowledgeGraph ExtractKnGraphFromUris(List<UriAndOriginalGraphType> urisAndOriginalGraphTypes)
         {
             KnowledgeGraph result = new KnowledgeGraph();
 
-            foreach (Uri uri in uris)
+            foreach (UriAndOriginalGraphType item in urisAndOriginalGraphTypes)
             {
-                ParseHtmlNodesIntoKnGraph(result, GetRelevantHtmlNodesFromUri(uri));
+                ParseHtmlNodesIntoKnGraph(result, GetRelevantHtmlNodesFromUri(item.Uri), item.OriginalGraphType);
             }
 
             return result;
@@ -130,7 +138,7 @@ namespace KnowledgeExtractor
             return results;
         }
 
-        private static void ParseHtmlNodesIntoKnGraph(KnowledgeGraph graph, List<HtmlNode> htmlNodes)
+        private static void ParseHtmlNodesIntoKnGraph(KnowledgeGraph graph, List<HtmlNode> htmlNodes, OriginalGraphType originalGraphType = OriginalGraphType.Unknown)
         {
             if(graph == null)
             {
@@ -161,7 +169,7 @@ namespace KnowledgeExtractor
 
                     // stop processing nodes once you hit the see also node because we don't want any of the info after see also in the graph 
                     // which is "see also"'s child nodes and the references section
-                    if (string.Equals(nodeLabel, "see also", System.StringComparison.InvariantCultureIgnoreCase))
+                    if (string.Equals(nodeLabel, "see also", StringComparison.InvariantCultureIgnoreCase))
                     {
                         break;
                     }
