@@ -25,8 +25,8 @@ namespace DsAPKgForms
         static void Main()
         {
             // get the knowlege graph from wikipedia
-            KnowledgeGraph listOfAlgorithmsKnGraph = WKGE.GetWikipediaPageKnowledgeGraph(WKGE.GetWikipediaListOfAlgorithmsPageUri());
-            KnowledgeGraph listOfDataStructuresKnGraph = WKGE.GetWikipediaPageKnowledgeGraph(WKGE.GetWikipediaListOfDataStructuresPageUri());
+            KnowledgeGraph listOfAlgorithmsKnGraph = WKGE.ExtractKnGraphFromUri(WKGE.GetWikipediaListOfAlgorithmsPageUri());
+            KnowledgeGraph listOfDataStructuresKnGraph = WKGE.ExtractKnGraphFromUri(WKGE.GetWikipediaListOfDataStructuresPageUri());
 
             //create a form 
             System.Windows.Forms.Form form = new System.Windows.Forms.Form();

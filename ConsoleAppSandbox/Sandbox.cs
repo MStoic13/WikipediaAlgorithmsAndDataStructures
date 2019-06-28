@@ -8,7 +8,7 @@ namespace ConsoleAppSandbox
     {
         static void Main(string[] args)
         {
-            KnowledgeGraph knowledgeGraph = WKGE.GetWikipediaPageKnowledgeGraph(WKGE.GetWikipediaListOfAlgorithmsPageUri());
+            KnowledgeGraph knowledgeGraph = WKGE.ExtractKnGraphFromUri(WKGE.GetWikipediaListOfAlgorithmsPageUri());
 
             Console.WriteLine(Utilities.FormatKnGraphIndexAndLabelsForPrinting(knowledgeGraph));
             Console.WriteLine();

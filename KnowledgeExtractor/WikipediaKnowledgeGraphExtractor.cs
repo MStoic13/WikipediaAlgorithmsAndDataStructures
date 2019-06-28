@@ -8,7 +8,7 @@ namespace KnowledgeExtractor
 {
     public static class WikipediaKnowledgeGraphExtractor
     {
-        private static List<Uri> WikipediaPagesToParse = new List<Uri>()
+        public static List<Uri> WikipediaPagesToParse = new List<Uri>()
         {
             new Uri("https://en.wikipedia.org/wiki/List_of_algorithms"),
             new Uri("https://en.wikipedia.org/wiki/List_of_data_structures")
@@ -22,14 +22,6 @@ namespace KnowledgeExtractor
         public static Uri GetWikipediaListOfDataStructuresPageUri()
         {
             return WikipediaPagesToParse[1];
-        }
-
-        public static KnowledgeGraph GetWikipediaPageKnowledgeGraph(Uri wikipediaPageUri)
-        {
-            List<HtmlNode> htmlNodes = ExtractRelevantHtmlNodesFromUri(wikipediaPageUri);
-            KnowledgeGraph result = new KnowledgeGraph();
-            ParseHtmlNodesIntoKnGraph(result, htmlNodes);
-            return result;
         }
 
         public static HtmlDocument GetHtmlDocumentFromUri(Uri uri)
@@ -54,56 +46,28 @@ namespace KnowledgeExtractor
             return doc;
         }
 
-        private static List<HtmlNode> ExtractRelevantHtmlNodesFromHtmlDoc(HtmlDocument htmlDoc)
-        {
-            // get the div in which the page content is
-            HtmlNode contentRoot = htmlDoc.DocumentNode.SelectNodes("//div").Where(x => x.HasClass("mw-parser-output")).FirstOrDefault();
-
-            List<HtmlNode> results = contentRoot.ChildNodes.Where(x => x.Name == "h2" || x.Name == "h3" || x.Name == "h4" || x.Name == "ul").ToList();
-            return results;
-        }
-
-        public static List<HtmlNode> ExtractRelevantHtmlNodesFromUri(Uri wikipediaPageUri)
+        public static List<HtmlNode> GetRelevantHtmlNodesFromUri(Uri wikipediaPageUri)
         {
             HtmlDocument doc = GetHtmlDocumentFromUri(wikipediaPageUri);
-            return ExtractRelevantHtmlNodesFromHtmlDoc(doc);
+            return GetRelevantHtmlNodesFromHtmlDoc(doc);
         }
 
-        public static List<HtmlNode> ExtractRelevantHtmlNodesFromHtmlString(string htmlInput)
+        public static List<HtmlNode> GetRelevantHtmlNodesFromHtmlString(string htmlInput)
         {
             HtmlDocument doc = GetHtmlDocumentFromHtmlString(htmlInput);
-            return ExtractRelevantHtmlNodesFromHtmlDoc(doc);
+            return GetRelevantHtmlNodesFromHtmlDoc(doc);
         }
 
-        private static List<HtmlNode> ExtractRelevantHtmlNodesFromHtmlFile(string filePath)
+        public static List<HtmlNode> GetRelevantHtmlNodesFromHtmlFile(string filePath)
         {
             HtmlDocument doc = GetHtmlDocumentFromHtmlFile(filePath);
-            return ExtractRelevantHtmlNodesFromHtmlDoc(doc);
+            return GetRelevantHtmlNodesFromHtmlDoc(doc);
         }
 
         public static KnowledgeGraph ExtractKnGraphFromUri(Uri uri)
         {
             KnowledgeGraph result = new KnowledgeGraph();
-            ParseHtmlNodesIntoKnGraph(result, ExtractRelevantHtmlNodesFromUri(uri));
-            return result;
-        }
-
-        public static KnowledgeGraph ExtractKnGraphFromHtmlInput(string htmlInput)
-        {
-            KnowledgeGraph result = new KnowledgeGraph();
-            ParseHtmlNodesIntoKnGraph(result, ExtractRelevantHtmlNodesFromHtmlString(htmlInput));
-            return result;
-        }
-
-        public static KnowledgeGraph ExtractKnGraphFromHtmlInputs(List<string> htmlInputs)
-        {
-            KnowledgeGraph result = new KnowledgeGraph();
-
-            foreach (string htmlInput in htmlInputs)
-            {
-                ParseHtmlNodesIntoKnGraph(result, ExtractRelevantHtmlNodesFromHtmlString(htmlInput));
-            }
-
+            ParseHtmlNodesIntoKnGraph(result, GetRelevantHtmlNodesFromUri(uri));
             return result;
         }
 
@@ -113,7 +77,26 @@ namespace KnowledgeExtractor
 
             foreach (Uri uri in uris)
             {
-                ParseHtmlNodesIntoKnGraph(result, ExtractRelevantHtmlNodesFromUri(uri));
+                ParseHtmlNodesIntoKnGraph(result, GetRelevantHtmlNodesFromUri(uri));
+            }
+
+            return result;
+        }
+
+        public static KnowledgeGraph ExtractKnGraphFromHtmlInput(string htmlInput)
+        {
+            KnowledgeGraph result = new KnowledgeGraph();
+            ParseHtmlNodesIntoKnGraph(result, GetRelevantHtmlNodesFromHtmlString(htmlInput));
+            return result;
+        }
+
+        public static KnowledgeGraph ExtractKnGraphFromHtmlInputs(List<string> htmlInputs)
+        {
+            KnowledgeGraph result = new KnowledgeGraph();
+
+            foreach (string htmlInput in htmlInputs)
+            {
+                ParseHtmlNodesIntoKnGraph(result, GetRelevantHtmlNodesFromHtmlString(htmlInput));
             }
 
             return result;
@@ -122,7 +105,7 @@ namespace KnowledgeExtractor
         public static KnowledgeGraph ExtractKnGraphFromHtmlFile(string filePath)
         {
             KnowledgeGraph result = new KnowledgeGraph();
-            ParseHtmlNodesIntoKnGraph(result, ExtractRelevantHtmlNodesFromHtmlFile(filePath));
+            ParseHtmlNodesIntoKnGraph(result, GetRelevantHtmlNodesFromHtmlFile(filePath));
             return result;
         }
 
@@ -132,13 +115,22 @@ namespace KnowledgeExtractor
 
             foreach (string filePath in htmlFilePaths)
             {
-                ParseHtmlNodesIntoKnGraph(result, ExtractRelevantHtmlNodesFromHtmlFile(filePath));
+                ParseHtmlNodesIntoKnGraph(result, GetRelevantHtmlNodesFromHtmlFile(filePath));
             }
 
             return result;
         }
 
-        public static void ParseHtmlNodesIntoKnGraph(KnowledgeGraph graph, List<HtmlNode> htmlNodes)
+        private static List<HtmlNode> GetRelevantHtmlNodesFromHtmlDoc(HtmlDocument htmlDoc)
+        {
+            // get the div in which the page content is
+            HtmlNode contentRoot = htmlDoc.DocumentNode.SelectNodes("//div").Where(x => x.HasClass("mw-parser-output")).FirstOrDefault();
+
+            List<HtmlNode> results = contentRoot.ChildNodes.Where(x => x.Name == "h2" || x.Name == "h3" || x.Name == "h4" || x.Name == "ul").ToList();
+            return results;
+        }
+
+        private static void ParseHtmlNodesIntoKnGraph(KnowledgeGraph graph, List<HtmlNode> htmlNodes)
         {
             if(graph == null)
             {
@@ -194,7 +186,7 @@ namespace KnowledgeExtractor
             }
         }
 
-        public static void ExtractAndAddUlSubgraphRecursive(KnowledgeGraph graph, int parentIndex, HtmlNode nodeToParse, ref int nodeToParseIndex)
+        private static void ExtractAndAddUlSubgraphRecursive(KnowledgeGraph graph, int parentIndex, HtmlNode nodeToParse, ref int nodeToParseIndex)
         {
             foreach (var child in nodeToParse.ChildNodes.Where(n => n.Name == "li"))
             {
