@@ -262,3 +262,6 @@ __pycache__/
 
 # the history folder in Output
 Output/history/
+
+# the files downloaded
+DownloadedHtmlPages/
