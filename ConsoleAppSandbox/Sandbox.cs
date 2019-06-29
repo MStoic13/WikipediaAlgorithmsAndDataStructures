@@ -1,5 +1,7 @@
-﻿using KnowledgeExtractor;
+﻿using HtmlAgilityPack;
+using KnowledgeExtractor;
 using System;
+using System.Linq;
 using WKGE = KnowledgeExtractor.WikipediaKnowledgeGraphExtractor;
 
 namespace ConsoleAppSandbox
@@ -11,12 +13,14 @@ namespace ConsoleAppSandbox
             KnowledgeGraph knowledgeGraph = WKGE.ExtractKnGraphFromUris(WKGE.WikipediaPagesToParse);
 
             Console.WriteLine(Utilities.FormatKnGraphIndexAndLabelsForPrinting(knowledgeGraph));
-            Console.WriteLine();
+            //Console.WriteLine();
 
-            Console.WriteLine(Utilities.FormatKnGraphLabelsForPrinting(knowledgeGraph));
-            Console.WriteLine();
+            //Console.WriteLine(Utilities.FormatKnGraphLabelsForPrinting(knowledgeGraph));
+            //Console.WriteLine();
 
-            Console.WriteLine(Utilities.FormatKnGraphIndexesForPrinting(knowledgeGraph));
+            //Console.WriteLine(Utilities.FormatKnGraphIndexesForPrinting(knowledgeGraph));
+
+            // Utilities.DownloadAllPagesInKnGraph();
 
             Console.ReadKey();
         }

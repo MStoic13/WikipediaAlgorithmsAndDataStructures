@@ -1,11 +1,17 @@
-﻿using System;
+﻿using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
+using WKGE = KnowledgeExtractor.WikipediaKnowledgeGraphExtractor;
 
 namespace KnowledgeExtractor
 {
     public static class Utilities
     {
+        public static char[] WindowsBannedCharsFromFilenames = new char[9] { '/', '\\', '*', ':', '?', '"', '<', '>', '|' };
+
         public enum OriginalGraphType
         {
             Unknown,
@@ -100,6 +106,54 @@ namespace KnowledgeExtractor
             {
                 sb.Append("    ");
             }
+        }
+
+        public static void SaveUriToHtmlFile(Uri uri, string filePath)
+        {
+            HtmlDocument doc = WKGE.GetHtmlDocumentFromUri(uri);
+            File.WriteAllText(filePath, doc.DocumentNode.OuterHtml);
+        }
+
+        public static void SaveUriPageContentToTxtFile(Uri uri, string filePath)
+        {
+            HtmlDocument doc = WKGE.GetHtmlDocumentFromUri(uri);
+            HtmlNode contentRoot = WKGE.GetWikipediaPageContentNode(doc);
+            if(contentRoot != null)
+            {
+                File.WriteAllText(filePath, contentRoot.InnerText);
+            }
+        }
+
+        public static void DownloadAllPagesInKnGraph()
+        {
+            KnowledgeGraph knowledgeGraph = WKGE.ExtractKnGraphFromUris(WKGE.WikipediaPagesToParse);
+
+            // Download the html files
+            SaveUriToHtmlFile(WKGE.GetWikipediaListOfAlgorithmsPageUri(), "../../../DownloadedHtmlPages/listOfAlgos.html");
+            SaveUriToHtmlFile(WKGE.GetWikipediaListOfDataStructuresPageUri(), "../../../DownloadedHtmlPages/listOfDataStructures.html");
+
+            // Download the content of each link in the nodes of the kn graph
+            foreach (KnGNode node in knowledgeGraph.KnGraph.Where(x => x.LinkToPage != null))
+            {
+                string[] linkBits = node.LinkToPage.ToString().Split('/');
+                string fileName = RemoveCharsFromString(linkBits[linkBits.Length - 1], WindowsBannedCharsFromFilenames) + ".txt";
+                string filePath = "../../../DownloadedHtmlPages/" + fileName;
+
+                if (!File.Exists(filePath))
+                {
+                    SaveUriPageContentToTxtFile(node.LinkToPage, filePath);
+                    Console.WriteLine("Wrote file with name " + fileName);
+                }
+                else
+                {
+                    Console.WriteLine("!!! ALREADYEXISTS !!! " + filePath);
+                }
+            }
+        }
+
+        public static string RemoveCharsFromString(string source, char[] chars)
+        {
+            return String.Join("", source.ToCharArray().Where(a => !chars.Contains(a)).ToArray());
         }
     }
 }

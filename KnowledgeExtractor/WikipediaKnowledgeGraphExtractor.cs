@@ -132,10 +132,15 @@ namespace KnowledgeExtractor
         private static List<HtmlNode> GetRelevantHtmlNodesFromHtmlDoc(HtmlDocument htmlDoc)
         {
             // get the div in which the page content is
-            HtmlNode contentRoot = htmlDoc.DocumentNode.SelectNodes("//div").Where(x => x.HasClass("mw-parser-output")).FirstOrDefault();
+            HtmlNode contentRoot = GetWikipediaPageContentNode(htmlDoc);
 
             List<HtmlNode> results = contentRoot.ChildNodes.Where(x => x.Name == "h2" || x.Name == "h3" || x.Name == "h4" || x.Name == "ul").ToList();
             return results;
+        }
+
+        public static HtmlNode GetWikipediaPageContentNode(HtmlDocument htmlDoc)
+        {
+            return htmlDoc.DocumentNode.SelectNodes("//div").Where(x => x.HasClass("mw-parser-output")).FirstOrDefault();
         }
 
         private static void ParseHtmlNodesIntoKnGraph(KnowledgeGraph graph, List<HtmlNode> htmlNodes, OriginalGraphType originalGraphType = OriginalGraphType.Unknown)
