@@ -1,6 +1,8 @@
 ﻿using HtmlAgilityPack;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using static KnowledgeExtractor.Utilities;
 
@@ -19,7 +21,7 @@ namespace KnowledgeExtractor
             {
                 Uri = new Uri("https://en.wikipedia.org/wiki/List_of_data_structures"),
                 OriginalGraphType = OriginalGraphType.DataStructuresKnGraph
-            }, 
+            },
         };
 
         public static Uri GetWikipediaListOfAlgorithmsPageUri()
@@ -86,6 +88,37 @@ namespace KnowledgeExtractor
             foreach (UriAndOriginalGraphType item in urisAndOriginalGraphTypes)
             {
                 ParseHtmlNodesIntoKnGraph(result, GetRelevantHtmlNodesFromUri(item.Uri), item.OriginalGraphType);
+            }
+
+            return result;
+        }
+
+        public static KnowledgeGraph GetKnowledgeGraphFromWikipedia()
+        {
+            KnowledgeGraph result = new KnowledgeGraph();
+
+            // get the kn graph from the uris
+            result = ExtractKnGraphFromUris(WikipediaPagesToParse);
+
+            // add the additional edges from the data structures word count to show what data structures each algorithm and data structure is using
+            // get the word counts from the json file
+            List<WordCount> dsWordsForGraph = JsonConvert.DeserializeObject<List<WordCount>>(File.ReadAllText("../../../dataStructureWordsCountForNodesInGraph.json"));
+            // get the nodes for the DS words
+            List<KnGNode> dataStructureNodes = result.KnGraph.Where(n => n.OriginalGraphType == OriginalGraphType.DataStructuresKnGraph).ToList();
+            List<string> dsWordsToIgnore = new List<string>() { "other", "union", "reference" };
+            // add the additional edges to the graph according to the json file
+            foreach (var dsWordsForNode in dsWordsForGraph)
+            {
+                int nodeIndex = dsWordsForNode.Index;
+                List<string> dsWords = dsWordsForNode.WordsCount.Keys.ToList();
+                dsWords = dsWords.Select(s => s.ToLowerInvariant()).ToList();
+                List<string> dsWordsFiltered = dsWords.Except(dsWordsToIgnore).ToList();
+
+                foreach (var dsWord in dsWordsFiltered)
+                {
+                    KnGNode dsWordNode = dataStructureNodes.Where(n => string.Equals(n.Label, dsWord, StringComparison.InvariantCultureIgnoreCase)).First();
+                    result.KnGraph[nodeIndex].Neighbors.Add(new KnGNode(dsWordNode));
+                }
             }
 
             return result;

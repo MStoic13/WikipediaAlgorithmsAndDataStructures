@@ -27,5 +27,15 @@ namespace KnowledgeExtractor
             this.LinkToPage = linkToPage;
             this.Neighbors = new List<KnGNode>();
         }
+
+        public KnGNode(KnGNode node)
+        {
+            this.Index = node.Index;
+            this.OriginalGraphType = node.OriginalGraphType;
+            this.Label = node.Label;
+            this.HtmlName = node.HtmlName;
+            this.LinkToPage = node.LinkToPage;
+            this.Neighbors = new List<KnGNode>(node.Neighbors);
+        }
     }
 }

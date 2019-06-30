@@ -44,7 +44,7 @@ namespace DsAPKgForms
         static void Main()
         {
             // get the knowlege graph from all wikipedia Uris in WKGE
-            KnowledgeGraph knowledgeGraph = WKGE.ExtractKnGraphFromUris(WKGE.WikipediaPagesToParse);
+            KnowledgeGraph knowledgeGraph = WKGE.GetKnowledgeGraphFromWikipedia();
 
             //create a form 
             System.Windows.Forms.Form form = new System.Windows.Forms.Form();
