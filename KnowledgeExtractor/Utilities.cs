@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -135,14 +136,12 @@ namespace KnowledgeExtractor
             // Download the content of each link in the nodes of the kn graph
             foreach (KnGNode node in knowledgeGraph.KnGraph.Where(x => x.LinkToPage != null))
             {
-                string[] linkBits = node.LinkToPage.ToString().Split('/');
-                string fileName = RemoveCharsFromString(linkBits[linkBits.Length - 1], WindowsBannedCharsFromFilenames) + ".txt";
-                string filePath = "../../../DownloadedHtmlPages/" + fileName;
+                string filePath = GetFilePathFromNodeLinkTopage(node.LinkToPage);
 
                 if (!File.Exists(filePath))
                 {
                     SaveUriPageContentToTxtFile(node.LinkToPage, filePath);
-                    Console.WriteLine("Wrote file with name " + fileName);
+                    Console.WriteLine("Wrote file with name " + Path.GetFileName(filePath));
                 }
                 else
                 {
@@ -151,9 +150,82 @@ namespace KnowledgeExtractor
             }
         }
 
+        public static string GetFilePathFromNodeLinkTopage(Uri linkToPage)
+        {
+            string[] linkBits = linkToPage.ToString().Split('/');
+            string fileName = RemoveCharsFromString(linkBits[linkBits.Length - 1], WindowsBannedCharsFromFilenames) + ".txt";
+            string filePath = "../../../DownloadedHtmlPages/" + fileName;
+            return filePath;
+        }
+
         public static string RemoveCharsFromString(string source, char[] chars)
         {
             return String.Join("", source.ToCharArray().Where(a => !chars.Contains(a)).ToArray());
+        }
+
+        public static List<string> GetDataStructureWordsFromGraph(KnowledgeGraph knowledgeGraph)
+        {
+            List<string> result = new List<string>();
+
+            List<KnGNode> dataStructureNodes = knowledgeGraph.KnGraph.Where(n => n.OriginalGraphType == OriginalGraphType.DataStructuresKnGraph).ToList();
+            result = dataStructureNodes.Select(x => x.Label).Distinct().ToList();
+
+            return result;
+        }
+
+        public static List<WordCount> GetDataStructureWordCountsFromGraph(KnowledgeGraph knowledgeGraph)
+        {
+            // compute the list of DS words
+            List<string> dataStructureWords = Utilities.GetDataStructureWordsFromGraph(knowledgeGraph);
+            List<WordCount> result = new List<WordCount>();
+
+            // foreach node in the graph which has a link to page and downloaded file for that link, get the ds word count
+            knowledgeGraph.KnGraph
+            .Where(node => node.LinkToPage != null && File.Exists(Utilities.GetFilePathFromNodeLinkTopage(node.LinkToPage))).ToList()
+            .ForEach(node =>
+            {
+                // make empty ds words dictionary for this node
+                Dictionary<string, int> dsWordsCountDictForOneNode = new Dictionary<string, int>();
+                dataStructureWords.ForEach(dsWord =>
+                {
+                    dsWordsCountDictForOneNode.Add(dsWord, 0);
+                });
+
+                // get file content and count the ds words in it
+                string fileContent = File.ReadAllText(Utilities.GetFilePathFromNodeLinkTopage(node.LinkToPage));
+                string[] fileContentWords = fileContent.Split(' ');
+                foreach (string word in fileContentWords)
+                {
+                    if (dsWordsCountDictForOneNode.ContainsKey(word))
+                    {
+                        dsWordsCountDictForOneNode[word]++;
+                    }
+                }
+
+                // remove words with 0 count from words count dictionary
+                dsWordsCountDictForOneNode = dsWordsCountDictForOneNode.Where(x => x.Value > 0).ToDictionary(y => y.Key, y => y.Value);
+
+                // only add it to the list if there is at least one ds word
+                if (dsWordsCountDictForOneNode.Any())
+                {
+                    WordCount wordCountForNode = new WordCount()
+                    {
+                        Index = node.Index,
+                        WordsCount = new Dictionary<string, int>(dsWordsCountDictForOneNode)
+                    };
+
+                    result.Add(wordCountForNode);
+                }
+            });
+
+            return result;
+        }
+
+        public static void SaveDSWordCountsToJsonFile(KnowledgeGraph knowledgeGraph)
+        {
+            List<WordCount> dsWordCountsForGraph = GetDataStructureWordCountsFromGraph(knowledgeGraph);
+            string jsonFilePath = "../../../dataStructureWordsCountForNodesInGraph.json";
+            File.WriteAllText(jsonFilePath, JsonConvert.SerializeObject(dsWordCountsForGraph));
         }
     }
 }

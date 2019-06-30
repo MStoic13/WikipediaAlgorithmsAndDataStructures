@@ -14,12 +14,13 @@ DONE 	- list of data structures - blue
 	DONE - remove the "references" node and the "see also" node from the graphs
 	DONE - combine everything into a single graph so that indexes don't overlap and separate categories per url (each url has a diff graph type) so that you can color differently
 	DONE - for each node in the algos and data structure graphs, get its link. 
-	- go to that page and count the numbre of times each Data Structure name (all DS graph nodes labels) is mentioned. Then draw edges to those which are > 0. Do this for the DS graph, too because graphs can be implemented with lists and arrays and we want edges between those to show this. Otherwise the wikipedia list doesn't show this connection
+	DONE - go to that page and count the numbre of times each Data Structure name (all DS graph nodes labels) is mentioned. 
+	- Then draw edges to those which are > 0. Do this for the DS graph, too because graphs can be implemented with lists and arrays and we want edges between those to show this. Otherwise the wikipedia list doesn't show this connection
 - render svg and send to a studio to print a giant poster of it. Enjoy :)
 - save pages and graphs
 	DONE - save the original wikipedia pages html (the content div only for Listo of Algorithms, List of DataStructures and all the nodes within them)
 	- save the resulting knowledge graph (whatever KnGNode contains: index, label, html tag, link etc.) and add ability to load the graph from this file
-	- save the Data structures pages words count for each page (assign it to nodes in the graph and use the page link as index and also assing an int index)
+	DONE - save the Data structures pages words count for each page (assign it to nodes in the graph)
 - other
 	DONE - change URLs from string to Uri
 	DONE - render straight into the MDS configuration, instead of having to manually select that every time I render
