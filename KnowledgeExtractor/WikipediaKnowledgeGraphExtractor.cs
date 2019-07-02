@@ -105,7 +105,7 @@ namespace KnowledgeExtractor
             List<WordCount> dsWordsForGraph = JsonConvert.DeserializeObject<List<WordCount>>(File.ReadAllText("../../../dataStructureWordsCountForNodesInGraph.json"));
             // get the nodes for the DS words
             List<KnGNode> dataStructureNodes = result.KnGraph.Where(n => n.OriginalGraphType == OriginalGraphType.DataStructuresKnGraph).ToList();
-            List<string> dsWordsToIgnore = new List<string>() { "other", "union", "reference" };
+            List<string> dsWordsToIgnore = new List<string>() { "other", "union", "reference", "arrays", "image", "matrix", "integer", "character", "list", "stack", "queue", "record", "bitmap", "set" };
             // add the additional edges to the graph according to the json file
             foreach (var dsWordsForNode in dsWordsForGraph)
             {

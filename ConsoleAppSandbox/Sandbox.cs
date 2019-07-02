@@ -25,7 +25,9 @@ namespace ConsoleAppSandbox
 
             // Utilities.DownloadAllPagesInKnGraph();
 
-            // Utilities.SaveDSWordCountsToJsonFile(knowledgeGraph);
+            Console.WriteLine("SaveDSWordCountsToJsonFile...");
+            Utilities.SaveDSWordCountsToJsonFile(knowledgeGraph);
+            Console.WriteLine("Done");
 
             Console.ReadKey();
         }

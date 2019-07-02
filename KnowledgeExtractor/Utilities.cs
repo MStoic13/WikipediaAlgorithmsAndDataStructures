@@ -167,7 +167,7 @@ namespace KnowledgeExtractor
         {
             List<string> result = new List<string>();
 
-            List<KnGNode> dataStructureNodes = knowledgeGraph.KnGraph.Where(n => n.OriginalGraphType == OriginalGraphType.DataStructuresKnGraph).ToList();
+            List<KnGNode> dataStructureNodes = knowledgeGraph.KnGraph.Where(n => n.OriginalGraphType == OriginalGraphType.DataStructuresKnGraph && n.Neighbors.Count == 0).ToList();
             result = dataStructureNodes.Select(x => x.Label).Distinct().ToList();
 
             return result;
@@ -181,7 +181,7 @@ namespace KnowledgeExtractor
 
             // foreach node in the graph which has a link to page and downloaded file for that link, get the ds word count
             knowledgeGraph.KnGraph
-            .Where(node => node.LinkToPage != null && File.Exists(Utilities.GetFilePathFromNodeLinkTopage(node.LinkToPage))).ToList()
+            .Where(node => node.OriginalGraphType == OriginalGraphType.AlgorithmsKnGraph && node.LinkToPage != null && File.Exists(Utilities.GetFilePathFromNodeLinkTopage(node.LinkToPage))).ToList()
             .ForEach(node =>
             {
                 // make empty ds words dictionary for this node
