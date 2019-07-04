@@ -24,6 +24,11 @@ namespace KnowledgeExtractor
             },
         };
 
+        private static List<string> DataStructureWordsToIgnore = new List<string>()
+        {
+            "other", "union", "reference", "arrays", "image", "matrix", "integer", "character", "list", "stack", "queue", "record", "bitmap", "set"
+        };
+
         public static Uri GetWikipediaListOfAlgorithmsPageUri()
         {
             return WikipediaPagesToParse[0].Uri;
@@ -103,23 +108,39 @@ namespace KnowledgeExtractor
 
         public static void AddEdgesBetweenAlgorithmsAndDataStructures(ref KnowledgeGraph graph)
         {
-            // add the additional edges from the data structures word count to show what data structures each algorithm and data structure is using
-            // get the word counts from the json file
-            List<WordCount> dataStructureWordsInGraph = JsonConvert.DeserializeObject<List<WordCount>>(File.ReadAllText("../../../dataStructureWordsCountForNodesInGraph.json"));
-            List<string> dataStructureWordsToIgnore = new List<string>() { "other", "union", "reference", "arrays", "image", "matrix", "integer", "character", "list", "stack", "queue", "record", "bitmap", "set" };
+            List<WordCount> dataStructureWordsInGraph = GetDataStructureWordsInEachWikiPage();
             Dictionary<string, KnGNode> dataStructureNodes = GetDataStructureNodesWithoutDuplicates(graph);
             
-            // add the additional edges to the graph according to the json file
-            foreach (var dataStructureWordsInOneNode in dataStructureWordsInGraph)
+            foreach (var dataStructureWordsToAddInOneNode in dataStructureWordsInGraph)
             {
-                List<string> words = dataStructureWordsInOneNode.WordsCount.Keys.Select(word => word.ToLowerInvariant()).ToList();
-                List<string> dsWordsFiltered = words.Except(dataStructureWordsToIgnore).ToList();
-
-                foreach (var dsWord in dsWordsFiltered)
-                {
-                    AddEdgeToKnowledgeGraph(graph: ref graph, nodeIndex: dataStructureWordsInOneNode.Index, nodeToAdd: dataStructureNodes[dsWord]);
-                }
+                AddDataStructureWordsToNode(graph: ref graph, wordsToAddToNode: dataStructureWordsToAddInOneNode, dataStructureNodes: dataStructureNodes);
             }
+        }
+
+        private static void AddDataStructureWordsToNode(ref KnowledgeGraph graph, WordCount wordsToAddToNode, Dictionary<string, KnGNode> dataStructureNodes)
+        {
+            List<string> words = GetWords(wordsToAddToNode);
+            List<string> filteredWords = GetFilteredWords(words, DataStructureWordsToIgnore);
+
+            foreach (var word in filteredWords)
+            {
+                AddEdgeToKnowledgeGraph(graph: ref graph, nodeIndex: wordsToAddToNode.Index, nodeToAdd: dataStructureNodes[word]);
+            }
+        }
+
+        private static List<string> GetFilteredWords(List<string> words, List<string> wordsToIgnore)
+        {
+            return words.Except(wordsToIgnore).ToList();
+        }
+
+        private static List<string> GetWords(WordCount wordCount)
+        {
+            return wordCount.WordsCount.Keys.Select(word => word.ToLowerInvariant()).ToList();
+        }
+
+        private static List<WordCount> GetDataStructureWordsInEachWikiPage()
+        {
+            return JsonConvert.DeserializeObject<List<WordCount>>(File.ReadAllText("../../../dataStructureWordsCountForNodesInGraph.json"));
         }
 
         private static Dictionary<string, KnGNode> GetDataStructureNodesWithoutDuplicates(KnowledgeGraph graph)
