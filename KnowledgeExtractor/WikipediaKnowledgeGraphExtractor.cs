@@ -109,7 +109,7 @@ namespace KnowledgeExtractor
         public static void AddEdgesBetweenAlgorithmsAndDataStructures(ref KnowledgeGraph graph)
         {
             List<WordCountByNodeIndex> dataStructureWordsInGraph = GetDataStructureWordsInEachWikiPage();
-            Dictionary<string, KnowledgeGraphNode> dataStructureNodes = GetDataStructureNodesWithoutDuplicates(graph);
+            Dictionary<string, KnowledgeGraphNode> dataStructureNodes = GetUniqueDataStructureNodes(graph);
             
             foreach (var dataStructureWordsToAddInOneNode in dataStructureWordsInGraph)
             {
@@ -143,7 +143,7 @@ namespace KnowledgeExtractor
             return JsonConvert.DeserializeObject<List<WordCountByNodeIndex>>(File.ReadAllText("../../../dataStructureWordsCountForNodesInGraph.json"));
         }
 
-        private static Dictionary<string, KnowledgeGraphNode> GetDataStructureNodesWithoutDuplicates(KnowledgeGraph graph)
+        private static Dictionary<string, KnowledgeGraphNode> GetUniqueDataStructureNodes(KnowledgeGraph graph)
         {
             List<KnowledgeGraphNode> dataStructureNodesWithDuplicates = graph.KnGraph.Where(n => n.OriginalGraphType == OriginalGraphType.DataStructuresKnGraph).ToList();
             Dictionary<string, KnowledgeGraphNode> result = new Dictionary<string, KnowledgeGraphNode>();
