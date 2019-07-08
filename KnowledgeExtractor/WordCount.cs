@@ -2,7 +2,7 @@
 
 namespace KnowledgeExtractor
 {
-    public class WordCount
+    public class WordCountByNodeIndex
     {
         public int Index;
 

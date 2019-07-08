@@ -108,16 +108,16 @@ namespace KnowledgeExtractor
 
         public static void AddEdgesBetweenAlgorithmsAndDataStructures(ref KnowledgeGraph graph)
         {
-            List<WordCount> dataStructureWordsInGraph = GetDataStructureWordsInEachWikiPage();
+            List<WordCountByNodeIndex> dataStructureWordsInGraph = GetDataStructureWordsInEachWikiPage();
             Dictionary<string, KnowledgeGraphNode> dataStructureNodes = GetDataStructureNodesWithoutDuplicates(graph);
             
             foreach (var dataStructureWordsToAddInOneNode in dataStructureWordsInGraph)
             {
-                AddDataStructureWordsToNode(graph: ref graph, wordsToAddToNode: dataStructureWordsToAddInOneNode, dataStructureNodes: dataStructureNodes);
+                AddDataStructureWordsToNode(ref graph, dataStructureWordsToAddInOneNode, dataStructureNodes);
             }
         }
 
-        private static void AddDataStructureWordsToNode(ref KnowledgeGraph graph, WordCount wordsToAddToNode, Dictionary<string, KnowledgeGraphNode> dataStructureNodes)
+        private static void AddDataStructureWordsToNode(ref KnowledgeGraph graph, WordCountByNodeIndex wordsToAddToNode, Dictionary<string, KnowledgeGraphNode> dataStructureNodes)
         {
             List<string> words = GetWords(wordsToAddToNode);
             List<string> filteredWords = GetFilteredWords(words, DataStructureWordsToIgnore);
@@ -133,14 +133,14 @@ namespace KnowledgeExtractor
             return words.Except(wordsToIgnore).ToList();
         }
 
-        private static List<string> GetWords(WordCount wordCount)
+        private static List<string> GetWords(WordCountByNodeIndex wordCount)
         {
             return wordCount.WordsCount.Keys.Select(word => word.ToLowerInvariant()).ToList();
         }
 
-        private static List<WordCount> GetDataStructureWordsInEachWikiPage()
+        private static List<WordCountByNodeIndex> GetDataStructureWordsInEachWikiPage()
         {
-            return JsonConvert.DeserializeObject<List<WordCount>>(File.ReadAllText("../../../dataStructureWordsCountForNodesInGraph.json"));
+            return JsonConvert.DeserializeObject<List<WordCountByNodeIndex>>(File.ReadAllText("../../../dataStructureWordsCountForNodesInGraph.json"));
         }
 
         private static Dictionary<string, KnowledgeGraphNode> GetDataStructureNodesWithoutDuplicates(KnowledgeGraph graph)

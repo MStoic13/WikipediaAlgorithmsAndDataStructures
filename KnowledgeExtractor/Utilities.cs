@@ -173,11 +173,11 @@ namespace KnowledgeExtractor
             return result;
         }
 
-        public static List<WordCount> GetDataStructureWordCountsFromGraph(KnowledgeGraph knowledgeGraph)
+        public static List<WordCountByNodeIndex> GetDataStructureWordCountsFromGraph(KnowledgeGraph knowledgeGraph)
         {
             // compute the list of DS words
             List<string> dataStructureWords = Utilities.GetDataStructureWordsFromGraph(knowledgeGraph);
-            List<WordCount> result = new List<WordCount>();
+            List<WordCountByNodeIndex> result = new List<WordCountByNodeIndex>();
 
             // foreach node in the graph which has a link to page and downloaded file for that link, get the ds word count
             knowledgeGraph.KnGraph
@@ -208,7 +208,7 @@ namespace KnowledgeExtractor
                 // only add it to the list if there is at least one ds word
                 if (dsWordsCountDictForOneNode.Any())
                 {
-                    WordCount wordCountForNode = new WordCount()
+                    WordCountByNodeIndex wordCountForNode = new WordCountByNodeIndex()
                     {
                         Index = node.Index,
                         WordsCount = new Dictionary<string, int>(dsWordsCountDictForOneNode)
@@ -223,7 +223,7 @@ namespace KnowledgeExtractor
 
         public static void SaveDSWordCountsToJsonFile(KnowledgeGraph knowledgeGraph)
         {
-            List<WordCount> dsWordCountsForGraph = GetDataStructureWordCountsFromGraph(knowledgeGraph);
+            List<WordCountByNodeIndex> dsWordCountsForGraph = GetDataStructureWordCountsFromGraph(knowledgeGraph);
             string jsonFilePath = "../../../dataStructureWordsCountForNodesInGraph.json";
             File.WriteAllText(jsonFilePath, JsonConvert.SerializeObject(dsWordCountsForGraph));
         }
