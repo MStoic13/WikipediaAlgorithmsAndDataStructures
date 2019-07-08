@@ -31,11 +31,11 @@ namespace KnowledgeExtractor
         {
             StringBuilder sb = new StringBuilder();
 
-            foreach(KnGNode node in graph.KnGraph)
+            foreach(KnowledgeGraphNode node in graph.KnGraph)
             {
                 sb.AppendLine(node.OriginalGraphType + "-" + node.Index + ": " + node.HtmlName + ": " + node.Label + ", " + node.LinkToPage);
                 sb.Append(node.Index + ": ");
-                foreach (KnGNode neighbor in node.Neighbors)
+                foreach (KnowledgeGraphNode neighbor in node.Neighbors)
                 {
                     sb.Append(neighbor.Index + ", ");
                 }
@@ -49,10 +49,10 @@ namespace KnowledgeExtractor
         public static string FormatKnGraphIndexesForPrinting(KnowledgeGraph graph)
         {
             StringBuilder sb = new StringBuilder();
-            foreach (KnGNode node in graph.KnGraph)
+            foreach (KnowledgeGraphNode node in graph.KnGraph)
             {
                 sb.Append(node.Index + ": ");
-                foreach (KnGNode neighbor in node.Neighbors)
+                foreach (KnowledgeGraphNode neighbor in node.Neighbors)
                 {
                     sb.Append(neighbor.Index + ", ");
                 }
@@ -70,7 +70,7 @@ namespace KnowledgeExtractor
             graph.KnGraph.ForEach(x => visited.Add(false));
             StringBuilder sb = new StringBuilder();
 
-            foreach (KnGNode node in graph.KnGraph)
+            foreach (KnowledgeGraphNode node in graph.KnGraph)
             {
                 if (!visited[node.Index])
                 {
@@ -81,7 +81,7 @@ namespace KnowledgeExtractor
             return sb.ToString();
         }
 
-        private static void DFSRecursive(KnowledgeGraph graph, List<bool> visited, KnGNode currentNode, int level, ref StringBuilder sb)
+        private static void DFSRecursive(KnowledgeGraph graph, List<bool> visited, KnowledgeGraphNode currentNode, int level, ref StringBuilder sb)
         {
             sb.Append(currentNode.Label);
             sb.AppendLine();
@@ -89,7 +89,7 @@ namespace KnowledgeExtractor
 
             level++;
 
-            foreach (KnGNode neighbor in graph.KnGraph[currentNode.Index].Neighbors)
+            foreach (KnowledgeGraphNode neighbor in graph.KnGraph[currentNode.Index].Neighbors)
             {
                 if (!visited[neighbor.Index])
                 {
@@ -134,7 +134,7 @@ namespace KnowledgeExtractor
             SaveUriToHtmlFile(WKGE.GetWikipediaListOfDataStructuresPageUri(), "../../../DownloadedHtmlPages/listOfDataStructures.html");
 
             // Download the content of each link in the nodes of the kn graph
-            foreach (KnGNode node in knowledgeGraph.KnGraph.Where(x => x.LinkToPage != null))
+            foreach (KnowledgeGraphNode node in knowledgeGraph.KnGraph.Where(x => x.LinkToPage != null))
             {
                 string filePath = GetFilePathFromNodeLinkTopage(node.LinkToPage);
 
@@ -167,7 +167,7 @@ namespace KnowledgeExtractor
         {
             List<string> result = new List<string>();
 
-            List<KnGNode> dataStructureNodes = knowledgeGraph.KnGraph.Where(n => n.OriginalGraphType == OriginalGraphType.DataStructuresKnGraph && n.Neighbors.Count == 0).ToList();
+            List<KnowledgeGraphNode> dataStructureNodes = knowledgeGraph.KnGraph.Where(n => n.OriginalGraphType == OriginalGraphType.DataStructuresKnGraph && n.Neighbors.Count == 0).ToList();
             result = dataStructureNodes.Select(x => x.Label).Distinct().ToList();
 
             return result;

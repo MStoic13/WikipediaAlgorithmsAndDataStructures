@@ -56,7 +56,7 @@ namespace DsAPKgForms
             //add the graph content for list of algorithms 
             for (int index = 0; index < knowledgeGraph.KnGraph.Count; index++)
             {
-                KnGNode node = knowledgeGraph.KnGraph[index];
+                KnowledgeGraphNode node = knowledgeGraph.KnGraph[index];
 
                 // add node and set its color
                 graph.AddNode(node.Label).Attr.FillColor = GraphNodeColors[node.OriginalGraphType][node.HtmlName];

@@ -4,11 +4,11 @@ namespace KnowledgeExtractor
 {
     public class KnowledgeGraph
     {
-        public List<KnGNode> KnGraph { get; set; }
+        public List<KnowledgeGraphNode> KnGraph { get; set; }
 
         public KnowledgeGraph()
         {
-            this.KnGraph = new List<KnGNode>();
+            this.KnGraph = new List<KnowledgeGraphNode>();
         }
     }
 }

@@ -109,7 +109,7 @@ namespace KnowledgeExtractor
         public static void AddEdgesBetweenAlgorithmsAndDataStructures(ref KnowledgeGraph graph)
         {
             List<WordCount> dataStructureWordsInGraph = GetDataStructureWordsInEachWikiPage();
-            Dictionary<string, KnGNode> dataStructureNodes = GetDataStructureNodesWithoutDuplicates(graph);
+            Dictionary<string, KnowledgeGraphNode> dataStructureNodes = GetDataStructureNodesWithoutDuplicates(graph);
             
             foreach (var dataStructureWordsToAddInOneNode in dataStructureWordsInGraph)
             {
@@ -117,7 +117,7 @@ namespace KnowledgeExtractor
             }
         }
 
-        private static void AddDataStructureWordsToNode(ref KnowledgeGraph graph, WordCount wordsToAddToNode, Dictionary<string, KnGNode> dataStructureNodes)
+        private static void AddDataStructureWordsToNode(ref KnowledgeGraph graph, WordCount wordsToAddToNode, Dictionary<string, KnowledgeGraphNode> dataStructureNodes)
         {
             List<string> words = GetWords(wordsToAddToNode);
             List<string> filteredWords = GetFilteredWords(words, DataStructureWordsToIgnore);
@@ -143,12 +143,12 @@ namespace KnowledgeExtractor
             return JsonConvert.DeserializeObject<List<WordCount>>(File.ReadAllText("../../../dataStructureWordsCountForNodesInGraph.json"));
         }
 
-        private static Dictionary<string, KnGNode> GetDataStructureNodesWithoutDuplicates(KnowledgeGraph graph)
+        private static Dictionary<string, KnowledgeGraphNode> GetDataStructureNodesWithoutDuplicates(KnowledgeGraph graph)
         {
-            List<KnGNode> dataStructureNodesWithDuplicates = graph.KnGraph.Where(n => n.OriginalGraphType == OriginalGraphType.DataStructuresKnGraph).ToList();
-            Dictionary<string, KnGNode> result = new Dictionary<string, KnGNode>();
+            List<KnowledgeGraphNode> dataStructureNodesWithDuplicates = graph.KnGraph.Where(n => n.OriginalGraphType == OriginalGraphType.DataStructuresKnGraph).ToList();
+            Dictionary<string, KnowledgeGraphNode> result = new Dictionary<string, KnowledgeGraphNode>();
 
-            foreach (KnGNode node in dataStructureNodesWithDuplicates)
+            foreach (KnowledgeGraphNode node in dataStructureNodesWithDuplicates)
             {
                 string nodeLabel = node.Label.ToLowerInvariant();
                 if (!result.ContainsKey(nodeLabel))
@@ -160,9 +160,9 @@ namespace KnowledgeExtractor
             return result;
         }
 
-        private static void AddEdgeToKnowledgeGraph(ref KnowledgeGraph graph, int nodeIndex, KnGNode nodeToAdd)
+        private static void AddEdgeToKnowledgeGraph(ref KnowledgeGraph graph, int nodeIndex, KnowledgeGraphNode nodeToAdd)
         {
-            graph.KnGraph[nodeIndex].Neighbors.Add(new KnGNode(nodeToAdd));
+            graph.KnGraph[nodeIndex].Neighbors.Add(new KnowledgeGraphNode(nodeToAdd));
         }
 
         public static KnowledgeGraph ExtractKnGraphFromHtmlInput(string htmlInput)
@@ -255,7 +255,7 @@ namespace KnowledgeExtractor
                     }
 
                     // only add h's and li's to the graph, not ul's
-                    graph.KnGraph.Add(new KnGNode(nodeIndex, originalGraphType, nodeLabel, node.Name, nodeLinkToPage));
+                    graph.KnGraph.Add(new KnowledgeGraphNode(nodeIndex, originalGraphType, nodeLabel, node.Name, nodeLinkToPage));
 
                     mostRecentHIndex = nodeIndex;
 
@@ -266,7 +266,7 @@ namespace KnowledgeExtractor
                     // if it's h3 then add it to the most recent h2 and if it's h4 add it to the most recent h3 and so on if hN add it to h(N-1)
                     if (hIndex > 0)
                     {
-                        graph.KnGraph[mostRecentHIndexes[hIndex - 1]].Neighbors.Add(new KnGNode(nodeIndex, originalGraphType, nodeLabel, node.Name, nodeLinkToPage));
+                        graph.KnGraph[mostRecentHIndexes[hIndex - 1]].Neighbors.Add(new KnowledgeGraphNode(nodeIndex, originalGraphType, nodeLabel, node.Name, nodeLinkToPage));
                     }
 
                     nodeIndex++;
@@ -281,7 +281,7 @@ namespace KnowledgeExtractor
                 Uri nodeLinkToPage = GetUriFromNode(child);
 
                 // and add it as a parent, too
-                graph.KnGraph.Add(new KnGNode(index: nodeToParseIndex, originalGraphType: originalGraphType, label: GetLiNodeLabel(child), htmlName: "li", linkToPage: nodeLinkToPage));
+                graph.KnGraph.Add(new KnowledgeGraphNode(index: nodeToParseIndex, originalGraphType: originalGraphType, label: GetLiNodeLabel(child), htmlName: "li", linkToPage: nodeLinkToPage));
 
                 // 1 li can only have 1 ul in it
                 HtmlNode ulNode = child.ChildNodes.Where(node => node.Name == "ul").FirstOrDefault();
@@ -290,7 +290,7 @@ namespace KnowledgeExtractor
                 if (ulNode != null)
                 {
                     // add the li node to the graph because it will be the parent of its ul's items and increase the index counter
-                    graph.KnGraph[parentIndex].Neighbors.Add(new KnGNode(index: nodeToParseIndex, originalGraphType: originalGraphType, label: GetLiNodeLabel(child), htmlName: "li", linkToPage: nodeLinkToPage));
+                    graph.KnGraph[parentIndex].Neighbors.Add(new KnowledgeGraphNode(index: nodeToParseIndex, originalGraphType: originalGraphType, label: GetLiNodeLabel(child), htmlName: "li", linkToPage: nodeLinkToPage));
 
                     int newParentNodeIndex = nodeToParseIndex;
                     nodeToParseIndex++;
@@ -303,7 +303,7 @@ namespace KnowledgeExtractor
                 }
                 else
                 {
-                    graph.KnGraph[parentIndex].Neighbors.Add(new KnGNode(index: nodeToParseIndex, originalGraphType: originalGraphType, label: GetLiNodeLabel(child), htmlName: "li", linkToPage: nodeLinkToPage));
+                    graph.KnGraph[parentIndex].Neighbors.Add(new KnowledgeGraphNode(index: nodeToParseIndex, originalGraphType: originalGraphType, label: GetLiNodeLabel(child), htmlName: "li", linkToPage: nodeLinkToPage));
                     nodeToParseIndex++;
                 }
             }

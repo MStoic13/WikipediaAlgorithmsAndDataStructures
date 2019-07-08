@@ -4,7 +4,7 @@ using static KnowledgeExtractor.Utilities;
 
 namespace KnowledgeExtractor
 {
-    public class KnGNode
+    public class KnowledgeGraphNode
     {
         public int Index { get; private set; }
 
@@ -16,26 +16,26 @@ namespace KnowledgeExtractor
 
         public Uri LinkToPage { get; private set; }
 
-        public List<KnGNode> Neighbors { get; set; }
+        public List<KnowledgeGraphNode> Neighbors { get; set; }
 
-        public KnGNode(int index, OriginalGraphType originalGraphType, string label, string htmlName, Uri linkToPage)
+        public KnowledgeGraphNode(int index, OriginalGraphType originalGraphType, string label, string htmlName, Uri linkToPage)
         {
             this.Index = index;
             this.OriginalGraphType = originalGraphType;
             this.Label = label;
             this.HtmlName = htmlName;
             this.LinkToPage = linkToPage;
-            this.Neighbors = new List<KnGNode>();
+            this.Neighbors = new List<KnowledgeGraphNode>();
         }
 
-        public KnGNode(KnGNode node)
+        public KnowledgeGraphNode(KnowledgeGraphNode node)
         {
             this.Index = node.Index;
             this.OriginalGraphType = node.OriginalGraphType;
             this.Label = node.Label;
             this.HtmlName = node.HtmlName;
             this.LinkToPage = node.LinkToPage;
-            this.Neighbors = new List<KnGNode>(node.Neighbors);
+            this.Neighbors = new List<KnowledgeGraphNode>(node.Neighbors);
         }
     }
 }
